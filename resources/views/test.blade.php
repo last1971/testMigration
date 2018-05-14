@@ -1,3 +1,4 @@
 Ku-Ku
 sadasd
-dfdgfdfg
+<br/>
+{{$test->test}}

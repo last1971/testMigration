@@ -14,6 +14,4 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('test', function(){
-    return view("test");
-});
+Route::get('test', 'TestController@show')->name('test');
