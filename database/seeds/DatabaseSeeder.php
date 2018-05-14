@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -12,5 +13,18 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UsersTableSeeder::class);
+        $this->call('TestTableSeeder');
+
+        $this->command->info('Таблица test загружена данными!');
     }
+}
+
+class TestTableSeeder extends Seeder {
+
+    public function run()
+    {
+        DB::table('mytests')->delete();
+        \App\mytest::create(['test' => 'Первое поле','test2' => 'Second поле']);
+    }
+
 }
