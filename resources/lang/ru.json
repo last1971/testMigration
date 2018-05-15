@@ -3,9 +3,14 @@
   "Register" : "Регистрация",
   "test": "Тест",
   "Name": "Имя",
+  "Registartion name" : "Логин",
   "E-Mail Address": "E-Mail адрес",
   "Password": "Пароль",
   "Confirm Password" : "Подтвердите пароль",
   "Remember Me" : "Запомнить меня",
-  "Forgot Your Password?" : "Восстановить пароль?"
+  "Forgot Your Password?" : "Восстановить пароль?",
+  "The email has already been taken." : "Пользователь с таким паролем существует",
+  "The password must be at least 6 characters." : "Длина пароля не менее 6 символов",
+  "Logout" : "Выйти",
+  "User" : "Пользователь"
 }

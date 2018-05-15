@@ -11,4 +11,14 @@ class userType extends Model
     {
         return $this->hasMany('App\User');
     }
+
+    public static function toSelect()
+    {
+        $ret = array();
+        foreach (userType::all() as $type)
+        {
+            $ret[$type->id] = $type->name;
+        }
+        return $ret;
+    }
 }

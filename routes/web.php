@@ -14,4 +14,5 @@ App::setLocale('ru');
 Route::get('/', 'MainController@index');
 Route::get('test', 'TestController@show')->name('test');
 Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('home', 'HomeController@index')->name('home');
+Route::resource('users', 'UserController');
