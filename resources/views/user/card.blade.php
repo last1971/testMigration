@@ -42,15 +42,15 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        {{ Form::label('second_name',  'Фамилия', array('class' => 'col-md-4 col-form-label text-md-right')) }}
-                        <div class="col-md-6">
-                            {{ Form::text('second_name', $user->second_name, array('class' => 'form-control' . ($errors->has('second_name') ? ' is-invalid' : '' ))) }}
-                        </div>
-                    </div>
-                    <div class="form-group row">
                         {{ Form::label('patronymic_name', 'Отчество', array('class' => 'col-md-4 col-form-label text-md-right')) }}
                         <div class="col-md-6">
                             {{ Form::text('patronymic_name', $user->patronymic_name, array('class' => 'form-control' . ($errors->has('patronymic_name') ? ' is-invalid' : '' ))) }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        {{ Form::label('second_name',  'Фамилия', array('class' => 'col-md-4 col-form-label text-md-right')) }}
+                        <div class="col-md-6">
+                            {{ Form::text('second_name', $user->second_name, array('class' => 'form-control' . ($errors->has('second_name') ? ' is-invalid' : '' ))) }}
                         </div>
                     </div>
                     <div class="form-group row">
