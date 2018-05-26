@@ -11,7 +11,6 @@
                 </div>
                 <div class="card-body">
                     {{ Form::open(array('action' => 'UserController@store')) }}
-                    {{ Form::hidden('url',Request::url()) }}
                     {{ Form::hidden('id',$user->id) }}
                     <div class="form-group row">
                         {{ Form::label('name',  __('Registartion name'), array('class' => 'col-md-4 col-form-label text-md-right')) }}
@@ -19,7 +18,7 @@
                             {{ Form::text('name', $user->name, array('class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : '' ),'required', 'autofocus')) }}
                             @if ($errors->has('name'))
                                 <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ __($errors->first('name')) }}</strong>
                                     </span>
                             @endif
                         </div>
@@ -30,7 +29,7 @@
                             {{ Form::email('email', $user->email, array('class' => 'form-control' . ($errors->has('email') ? ' is-invalid' : '' ),'required')) }}
                             @if ($errors->has('email'))
                                 <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('email')}}</strong>
+                                        <strong>{{ __($errors->first('email'))}}</strong>
                                     </span>
                             @endif
                         </div>
@@ -53,15 +52,20 @@
                             {{ Form::text('second_name', $user->second_name, array('class' => 'form-control' . ($errors->has('second_name') ? ' is-invalid' : '' ))) }}
                         </div>
                     </div>
-                    <div class="form-group row">
-                        {{ Form::label('user_type_id', 'Тип пользователя', array('class' => 'col-md-4 col-form-label text-md-right')) }}
-                        <div class="col-md-6">
-                            {{ Form::select('user_type_id', App\userType::toSelect(), $user->user_type_id, array('class' => 'form-control')) }}
+                    @if (Auth::user()->isAdmin())
+                        <div class="form-group row">
+                            {{ Form::label('user_type_id', 'Тип пользователя', array('class' => 'col-md-4 col-form-label text-md-right')) }}
+                            <div class="col-md-6">
+                                {{ Form::select('user_type_id', App\userType::toSelect(), $user->user_type_id, array('class' => 'form-control')) }}
+                            </div>
                         </div>
-                    </div>
+                    @endif
                     <div class="form-group row mb-0">
-                        <div class="col-md-6 offset-md-4">
+                        <div class="col-md-8 offset-md-4">
                             {{ Form::submit('Сохранить',array('class' => 'btn btn-primary')) }}
+                            <a class="btn btn-link" href="{{ route('password.request') }}">
+                                Изменить пароль
+                            </a>
                         </div>
                     </div>
                     {{ Form::close() }}

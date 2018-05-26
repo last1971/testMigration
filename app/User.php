@@ -31,4 +31,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\userType');
     }
+
+    public function isAdmin()
+    {
+        return $this->user_type_id == 1;
+    }
 }

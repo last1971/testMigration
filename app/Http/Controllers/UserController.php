@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\User;
+use Auth;
 
 class UserController extends Controller
 {
@@ -16,6 +17,7 @@ class UserController extends Controller
     public function index()
     {
         //
+        return User::paginate(\request()->per_page);
     }
 
     /**
@@ -47,7 +49,7 @@ class UserController extends Controller
         $user->first_name = $request->input('first_name');
         $user->second_name = $request->input('second_name');
         $user->patronymic_name = $request->input('patronymic_name');
-        $user->user_type_id = $request->input('user_type_id');
+        if (Auth::user()->isAdmin()) $user->user_type_id = $request->input('user_type_id');
         $user->save();
         return Redirect::back()->with('user_update',['Данные обновлены']);
     }
