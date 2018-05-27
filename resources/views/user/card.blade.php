@@ -10,8 +10,9 @@
                     </div></div>
                 </div>
                 <div class="card-body">
-                    {{ Form::open(array('action' => 'UserController@store')) }}
-                    {{ Form::hidden('id',$user->id) }}
+                    {{ Form::open(array('action' => ['UserController@update',$user->id],'name' => 'user-edit')) }}
+
+                    {{ Form::hidden('_method','PUT') }}
                     <div class="form-group row">
                         {{ Form::label('name',  __('Registartion name'), array('class' => 'col-md-4 col-form-label text-md-right')) }}
                         <div class="col-md-6">
@@ -52,7 +53,7 @@
                             {{ Form::text('second_name', $user->second_name, array('class' => 'form-control' . ($errors->has('second_name') ? ' is-invalid' : '' ))) }}
                         </div>
                     </div>
-                    @if (Auth::user()->isAdmin())
+                    @if (Auth::user() != null && Auth::user()->isAdmin())
                         <div class="form-group row">
                             {{ Form::label('user_type_id', 'Тип пользователя', array('class' => 'col-md-4 col-form-label text-md-right')) }}
                             <div class="col-md-6">
@@ -60,13 +61,15 @@
                             </div>
                         </div>
                     @endif
-                    <div class="form-group row mb-0">
-                        <div class="col-md-8 offset-md-4">
-                            {{ Form::submit('Сохранить',array('class' => 'btn btn-primary')) }}
-                            <a class="btn btn-link" href="{{ route('password.request') }}">
-                                Изменить пароль
-                            </a>
+                    @if (!request()->ajax())
+                        <div class="form-group row mb-0">
+                            <div class="col-md-8 offset-md-4">
+                                {{ Form::submit('Сохранить',array('class' => 'btn btn-primary')) }}
+                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    Изменить пароль
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                     {{ Form::close() }}
                 </div>

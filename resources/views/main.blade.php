@@ -1,18 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            <hero></hero>
-        </div>
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Главная {{__('test')}}</div>
+    <hero></hero>
+    <div class="modal fade modal-centered user-edit">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Редактировать информацию о пользователе</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer form-group row mb-0">
 
-                    <div class="panel-body">
+                        <div class="col-md-8 offset-md-4">
+                            <button class="btn btn-primary" name="user-save">
+                                Сохранить
+                            </button>
+                            <button class="btn btn-secondary" data-dismiss="modal" aria-label="Close">
+                                Отменить
+                            </button>
+                        </div>
 
-                    </div>
                 </div>
             </div>
         </div>

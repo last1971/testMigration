@@ -1,9 +1,9 @@
 export default {
         tableClass: "table table-striped table-bordered",
         loadingClass: "loading",
-        ascendingIcon: "glyphicon glyphicon-chevron-up",
-        descendingIcon: "glyphicon glyphicon-chevron-down",
-        handleIcon: "glyphicon glyphicon-menu-hamburger",
+        ascendingIcon: "oi oi-sort-ascending",
+        descendingIcon: "oi oi-sort-descending",
+        handleIcon: "oi oi-menu-hamburger",
     pagination: {
         infoClass: 'float-left',
         wrapperClass: 'vuetable-pagination float-right',

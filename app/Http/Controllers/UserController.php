@@ -17,7 +17,10 @@ class UserController extends Controller
     public function index()
     {
         //
-        return User::paginate(\request()->per_page);
+        $sortRules = request()->input('sort');
+        $limit = request()->input('per_page');
+        list($field, $dir) = explode('|', $sortRules);
+        return User::orderBy($field, $dir)->paginate($limit);
     }
 
     /**
@@ -39,19 +42,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
-        $user = User::find($request->input('id'));
-        $this->validate($request, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255'.($request->input('email') != $user->email ? '|unique:users':''),
-        ]);
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->first_name = $request->input('first_name');
-        $user->second_name = $request->input('second_name');
-        $user->patronymic_name = $request->input('patronymic_name');
-        if (Auth::user()->isAdmin()) $user->user_type_id = $request->input('user_type_id');
-        $user->save();
-        return Redirect::back()->with('user_update',['Данные обновлены']);
+
     }
 
     /**
@@ -74,6 +65,8 @@ class UserController extends Controller
     public function edit($id)
     {
         //
+        $user = User::find($id);
+        return view('user.card',array('user'=>$user));
     }
 
     /**
@@ -86,6 +79,23 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $user = User::find($id);
+        $this->validate($request, [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255'.($request->input('email') != $user->email ? '|unique:users':''),
+        ]);
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->first_name = $request->input('first_name');
+        $user->second_name = $request->input('second_name');
+        $user->patronymic_name = $request->input('patronymic_name');
+        if (Auth::user() != null && Auth::user()->isAdmin()) $user->user_type_id = $request->input('user_type_id');
+        $user->save();
+        if ($request->ajax()) {
+            return response()->json(['message'=>'ok']);
+        } else {
+            return Redirect::back()->with('user_update', ['Данные обновлены']);
+        }
     }
 
     /**
