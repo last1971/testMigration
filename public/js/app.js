@@ -53290,7 +53290,7 @@ var render = function() {
       _c("vuetable", {
         ref: "vuetable",
         attrs: {
-          "api-url": "http://testmigration/users",
+          "api-url": "users",
           "pagination-path": "",
           "per-page": 2,
           fields: _vm.fields,

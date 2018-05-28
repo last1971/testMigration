@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <vuetable ref="vuetable"
-                  api-url="http://testmigration/users"
+                  api-url="users"
                   pagination-path=""
                   @vuetable:pagination-data="onPaginationData"
                   :per-page="2"
