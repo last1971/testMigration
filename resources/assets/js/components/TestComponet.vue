@@ -13,7 +13,7 @@
                 <div class="custom-actions">
                     <button class="btn btn-sm"
                             @click="onAction('edit-item', props.rowData, props.rowIndex)">
-                        <i class="oi oi-cog"></i>
+                        <i class="edit-icon"></i>
                     </button>
                     <button class="btn btn-sm"
                             @click="onAction('delete-item', props.rowData, props.rowIndex)">
