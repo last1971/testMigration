@@ -8,16 +8,13 @@
                 <div class="card-header">Информация</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
 
-                    @include('user.card',array('user'=>Auth::user()))
+                    <useredit :user='{!!  Auth::user()->toJson() !!}' :errors='[]' action="{{route('users.index',Auth::user()->id)}}"></useredit>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
 @endsection
+

@@ -15,4 +15,8 @@ Route::get('/', 'MainController@index');
 Route::get('test', 'TestController@show')->name('test');
 Auth::routes();
 Route::get('home', 'HomeController@index')->name('home');
-Route::resource('users', 'UserController');
+Route::get('current-user', function(){
+    return Auth::user();
+});
+Route::resource('users', 'UserController')->middleware('check.user');
+Route::resource('userTypes', 'UserTypeController');

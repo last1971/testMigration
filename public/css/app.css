@@ -11367,7 +11367,17 @@ a.text-dark:focus {
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+.my-icons {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+
 .edit-icon {
   background-image: url("/storage/icons/edit.svg");
+}
+
+.dustbin-icon {
+  background-image: url("/storage/icons/dustbin.svg");
 }
 

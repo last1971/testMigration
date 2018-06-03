@@ -20,7 +20,7 @@ class UserController extends Controller
         $sortRules = request()->input('sort');
         $limit = request()->input('per_page');
         list($field, $dir) = explode('|', $sortRules);
-        return User::orderBy($field, $dir)->paginate($limit);
+        return User::with('userType')->orderBy($field, $dir)->paginate($limit);
     }
 
     /**
@@ -107,5 +107,6 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+        return User::destroy($id);
     }
 }

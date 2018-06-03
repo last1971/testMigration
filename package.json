@@ -27,9 +27,13 @@
         "vue-events": "^3.1.0"
     },
     "dependencies": {
+        "bootstrap-vue": "^2.0.0-rc.11",
         "install": "^0.11.0",
         "open-iconic": "^1.1.1",
+        "vue-resource": "^1.5.1",
+        "vue-router": "^3.0.1",
         "vuetable-2": "^1.7.5",
+        "vuex": "^3.0.1",
         "yarn": "^1.6.0"
     }
 }

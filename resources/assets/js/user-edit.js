@@ -5,7 +5,7 @@ $(function(){
             params[$(this).attr('name')] = $(this).val();
         }).promise().done(function(){
             $.post($('[name=user-edit]').attr('action'),params,function(data){
-
+                app.$refs.users.reload();
             },'json');
         });
     });
