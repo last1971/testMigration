@@ -5,7 +5,7 @@
         <h1 class="row justify-content-center">
             Результат
         </h1>
-        <div class="row justify-content-center">
+        <div class="row justify-content-center bg-light">
             {{ $result }}
         </div>
     </div>
