@@ -20,3 +20,7 @@ Route::get('current-user', function(){
 });
 Route::resource('users', 'UserController')->middleware('check.user');
 Route::resource('userTypes', 'UserTypeController');
+Route::get('gitpull',function(){
+    $ret = shell_exec('ls');
+    return view('gitpull',['result' => '-'.$ret.'-']);
+})->middleware('check.admin');
