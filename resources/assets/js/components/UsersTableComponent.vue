@@ -4,7 +4,7 @@
                   :api-url="ApiUrl"
                   pagination-path=""
                   @vuetable:pagination-data="onPaginationData"
-                  :per-page="2"
+                  :per-page="5"
                   :fields="fields"
                   :css="css"
                   :sort-order="sortOrder"

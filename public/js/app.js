@@ -73425,7 +73425,7 @@ var render = function() {
         attrs: {
           "api-url": _vm.ApiUrl,
           "pagination-path": "",
-          "per-page": 2,
+          "per-page": 5,
           fields: _vm.fields,
           css: _vm.css,
           "sort-order": _vm.sortOrder

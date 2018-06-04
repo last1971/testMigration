@@ -19,8 +19,9 @@ Route::get('current-user', function(){
     return Auth::user();
 });
 Route::resource('users', 'UserController')->middleware('check.user');
+Route::get('userstable',function(){ return view('userstable');})->middleware('check.admin')->name('userstable');
 Route::resource('userTypes', 'UserTypeController');
 Route::get('gitpull',function(){
     $ret = shell_exec('git pull');
-    return view('gitpull',['result' => '- '.$ret.' -']);
+    return view('gitpull',['result' => $ret]);
 })->middleware('check.admin')->name('gitpull');

@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <userstable api-url="{{route('users.index')}}"></userstable>
-
+    <h1 class="row justify-content-center">Прувет!</h1>
 @endsection
