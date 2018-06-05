@@ -9,6 +9,7 @@ require('./bootstrap');
 //require('./user-edit');
 
 window.Vue = require('vue');
+
 var vueResource = require('vue-resource');
 var vueBootstrap = require('bootstrap-vue');
 var Vuex = require('vuex');
@@ -40,7 +41,6 @@ const store = new Vuex.Store({
 })
 
 
-
 Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#csrf-token').getAttribute('content');
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -50,6 +50,7 @@ Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#csrf-token').
 
 Vue.component('userstable', require('./components/UsersTableComponent.vue'));
 Vue.component('useredit', require('./components/UserEditComponent.vue'));
+Vue.component('testeditor', require('./components/ExampleComponent.vue'));
 var app = new Vue({
     store,
     el: '#app',

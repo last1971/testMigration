@@ -13,3 +13,8 @@ let mix = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');
+mix.autoload({ 'quill' :'window.Quill'})
+/*new webpack.ProvidePlugin({
+    'window.Quill': 'quill/dist/quill.js',
+    'Quill': 'quill/dist/quill.js',
+})*/

@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <h1 class="justify-content-centerr">Пользователи</h1>
         <vuetable ref="vuetable"
                   :api-url="ApiUrl"
                   pagination-path=""

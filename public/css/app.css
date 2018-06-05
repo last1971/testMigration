@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 /* Bootstrap */
 
 /* Override Bootstrap default variable */
@@ -11379,5 +11381,9 @@ a.text-dark:focus {
 
 .dustbin-icon {
   background-image: url("/storage/icons/dustbin.svg");
+}
+
+.ql-omega:after {
+  content: "\3A9";
 }
 

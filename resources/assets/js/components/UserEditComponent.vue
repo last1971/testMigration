@@ -22,14 +22,19 @@
                 <div class="form-group row">
                     <label for="name" class="col-md-4 col-form-label text-md-right">Логин</label>
                     <div class="col-md-6">
-                        <input required="required" autofocus="autofocus" name="name" type="text"  class="form-control" v-model="user.name">
+                        <input required autofocus name="name" type="text"  class="form-control" v-model="user.name" v-bind:class="{'is-invalid' : errors.errors !== undefined && errors.errors.name }">
+                        <template v-if="errors.errors && errors.errors.name">
+                            <span class="invalid-feedback">
+                                <strong>{{errors.errors.name[0]}}</strong>
+                            </span>
+                        </template>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail адрес</label>
                     <div class="col-md-6">
-                        <input required="required"  name="email" type="email"class="form-control" v-model="user.email" v-bind:class="{'is-invalid' : errors.errors !== undefined && errors.errors.email }">
-                        <template v-if="errors.errors">
+                        <input required  name="email" type="email" class="form-control" v-model="user.email" v-bind:class="{'is-invalid' : errors.errors !== undefined && errors.errors.email }">
+                        <template v-if="errors.errors && errors.errors.email">
                             <span class="invalid-feedback">
                                 <strong>{{errors.errors.email[0]}}</strong>
                             </span>
@@ -103,6 +108,7 @@
         },
         methods:{
             save () {
+                this.clearErrors();
                 axios.put(this.ApiUrl+'/'+this.user.id,this.user)
                     .then(response => {
                         this.success = true;
