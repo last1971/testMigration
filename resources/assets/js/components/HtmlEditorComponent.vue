@@ -4,6 +4,8 @@
             v-model="content"
             :editorOptions="editorSettings"
             :customModules="customModulesForEditor"
+            useCustomImageHandler
+            @imageAdded="handleImageAdded"
             ref="myTextEditor"
         ></vue-editor>
     </div>
@@ -21,7 +23,7 @@
         },
         data() {
             return {
-                content: '<h2 class="ql-align-center"><span class="ql-font-serif">Text content loading..</span></h2>',
+                content: 'Статья',
                 customModulesForEditor: [
                     { alias: 'imageDrop', module: ImageDrop },
                     { alias: 'imageResize', module: ImageResize }
@@ -35,7 +37,9 @@
                                 [{ 'size': ['small', false, 'large', 'huge'] }],
                                 [{ 'list': 'ordered'}, { 'list': 'bullet' }],
                                 ['image', 'video', 'code-block'],
+                                [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
                                 [{ 'font': [] }],
+                                [{ 'align': [] }],
                                 ['clean'],
                                 ['omega']
                             ],
@@ -58,6 +62,29 @@
                 return this.$refs.myTextEditor.quill
             },
         },
+        methods: {
+            handleImageAdded: function(file, Editor, cursorLocation, resetUploader) {
+                // An example of using FormData
+                // NOTE: Your key could be different such as:
+                // formData.append('file', file)
 
+                var formData = new FormData();
+                formData.append('image', file)
+
+                axios({
+                    url: 'load-image',
+                    method: 'POST',
+                    data: formData
+                })
+                    .then((result) => {
+                        let url = result.data.url // Get url from response
+                        Editor.insertEmbed(cursorLocation, 'image', url);
+                        resetUploader();
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
+            }
+        }
     }
 </script>

@@ -75392,7 +75392,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources\\assets\\js\\components\\ExampleComponent.vue"
+Component.options.__file = "resources\\assets\\js\\components\\HtmlEditorComponent.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -75401,9 +75401,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0ca92eac", Component.options)
+    hotAPI.createRecord("data-v-60adddbe", Component.options)
   } else {
-    hotAPI.reload("data-v-0ca92eac", Component.options)
+    hotAPI.reload("data-v-60adddbe", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -75435,6 +75435,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -75448,13 +75450,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         return {
-            content: '<h2 class="ql-align-center"><span class="ql-font-serif">Text content loading..</span></h2>',
+            content: 'Статья',
             customModulesForEditor: [{ alias: 'imageDrop', module: __WEBPACK_IMPORTED_MODULE_1_quill_image_drop_module__["a" /* ImageDrop */] }, { alias: 'imageResize', module: __WEBPACK_IMPORTED_MODULE_2_quill_image_resize_module___default.a }],
             editorSettings: {
                 modules: {
                     imageDrop: true,
                     imageResize: {},
-                    toolbar: { container: [['bold', 'italic', 'underline', 'strike'], [{ 'size': ['small', false, 'large', 'huge'] }], [{ 'list': 'ordered' }, { 'list': 'bullet' }], ['image', 'video', 'code-block'], [{ 'font': [] }], ['clean'], ['omega']],
+                    toolbar: { container: [['bold', 'italic', 'underline', 'strike'], [{ 'size': ['small', false, 'large', 'huge'] }], [{ 'list': 'ordered' }, { 'list': 'bullet' }], ['image', 'video', 'code-block'], [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
+                        [{ 'font': [] }], [{ 'align': [] }], ['clean'], ['omega']],
                         handlers: {
                             'omega': function omega() {
                                 var range = _this.editor.getSelection();
@@ -75474,8 +75477,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         editor: function editor() {
             return this.$refs.myTextEditor.quill;
         }
-    }
+    },
+    methods: {
+        handleImageAdded: function handleImageAdded(file, Editor, cursorLocation, resetUploader) {
+            // An example of using FormData
+            // NOTE: Your key could be different such as:
+            // formData.append('file', file)
 
+            var formData = new FormData();
+            formData.append('image', file);
+
+            axios({
+                url: 'load-image',
+                method: 'POST',
+                data: formData
+            }).then(function (result) {
+                var url = result.data.url; // Get url from response
+                Editor.insertEmbed(cursorLocation, 'image', url);
+                resetUploader();
+            }).catch(function (err) {
+                console.log(err);
+            });
+        }
+    }
 });
 
 /***/ }),
@@ -98270,8 +98294,10 @@ var render = function() {
         ref: "myTextEditor",
         attrs: {
           editorOptions: _vm.editorSettings,
-          customModules: _vm.customModulesForEditor
+          customModules: _vm.customModulesForEditor,
+          useCustomImageHandler: ""
         },
+        on: { imageAdded: _vm.handleImageAdded },
         model: {
           value: _vm.content,
           callback: function($$v) {
@@ -98290,7 +98316,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-0ca92eac", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-60adddbe", module.exports)
   }
 }
 

@@ -11,17 +11,18 @@
 |
 */
 App::setLocale('ru');
-Route::get('/', 'MainController@index');
+Route::get('/', 'MainController@index'); //Глвавная
 Route::get('test', 'TestController@show')->name('test');
-Auth::routes();
-Route::get('home', 'HomeController@index')->name('home');
+Auth::routes(); //Авторизация
+Route::get('home', 'HomeController@index')->name('home'); //Главная для прользователя
 Route::get('current-user', function(){
     return Auth::user();
-});
-Route::resource('users', 'UserController')->middleware('check.user');
-Route::get('userstable',function(){ return view('userstable');})->middleware('check.admin')->name('userstable');
-Route::resource('userTypes', 'UserTypeController');
+}); //Получить пользователя
+Route::resource('users', 'UserController')->middleware('check.user');//пользователи
+Route::get('userstable',function(){ return view('userstable');})->middleware('check.admin')->name('userstable');//Таблица пользователей
+Route::resource('userTypes', 'UserTypeController');//Типы пользователей
 Route::get('gitpull',function(){
     $ret = shell_exec('git pull');
     return view('gitpull',['result' => $ret]);
-})->middleware('check.admin')->name('gitpull');
+})->middleware('check.admin')->name('gitpull');//обновить
+Route::post('load-image','ImageController@upload');//загрузка картинки
