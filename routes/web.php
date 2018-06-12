@@ -26,3 +26,5 @@ Route::get('gitpull',function(){
     return view('gitpull',['result' => $ret]);
 })->middleware('check.admin')->name('gitpull');//обновить
 Route::post('load-image','ImageController@upload');//загрузка картинки
+Route::resource('names', 'NameController');//Наименования
+Route::resource('articles','ArticleController');//Статьи

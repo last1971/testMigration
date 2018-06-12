@@ -1,7 +1,7 @@
 <template>
     <div>
         <vue-editor
-            v-model="content"
+            v-model="val"
             :editorOptions="editorSettings"
             :customModules="customModulesForEditor"
             useCustomImageHandler
@@ -13,17 +13,35 @@
 
 <script>
 
-
     import {VueEditor} from 'vue2-editor'
     import { ImageDrop } from 'quill-image-drop-module'
     import ImageResize  from 'quill-image-resize-module'
     export default {
+        props:['value'],
         components: {
             VueEditor
         },
+        watch: {
+            value: function(newVal, oldVal) { // watch it
+
+                if (this.aga) {
+
+                    this.val = newVal;
+                    this.aga = false;
+                } else {
+                    this.aga = true;
+                }
+            },
+            val: function() {
+
+                this.aga = false;
+                this.$emit('input',this.val);
+            }
+        },
         data() {
             return {
-                content: 'Статья',
+                aga:true,
+                val:this.value,
                 customModulesForEditor: [
                     { alias: 'imageDrop', module: ImageDrop },
                     { alias: 'imageResize', module: ImageResize }
@@ -84,7 +102,8 @@
                     .catch((err) => {
                         console.log(err);
                     })
-            }
+            },
+
         }
     }
 </script>
