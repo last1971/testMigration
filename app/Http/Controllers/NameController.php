@@ -47,7 +47,7 @@ class NameController extends Controller
         }
         $name = new Name;
         $name->name = $request->name;
-        $name->alias = preg_replace('/[^а-яёА-ЯЁa-zA-Z0-9]/', '',$request->name);
+        $name->alias = mb_ereg_replace('/[^0-9A-Za-zА-Яа-я]/', '',$name->name);
         $name->save();
         return $name;
     }

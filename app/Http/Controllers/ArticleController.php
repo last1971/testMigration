@@ -15,7 +15,7 @@ class ArticleController extends Controller
     public function index()
     {
         //
-        return Article::with('name')->paginate(10);
+        return Article::join('names','articles.name_id','=','names.id')->with('name')->orderBy('names.alias','ASC')->paginate(10);
     }
 
     /**

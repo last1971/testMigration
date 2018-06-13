@@ -11375,6 +11375,10 @@ a.text-dark:focus {
   height: 20px;
 }
 
+.add-icon {
+  background-image: url("/storage/icons/add-plus-button.svg");
+}
+
 .edit-icon {
   background-image: url("/storage/icons/edit.svg");
 }
@@ -11385,5 +11389,21 @@ a.text-dark:focus {
 
 .ql-omega:after {
   content: "\3A9";
+}
+
+.left-slider {
+  background-image: url("/storage/icons/back.svg");
+}
+
+.left-slider:active {
+  background-image: url("/storage/icons/keyboard-left-arrow-button.svg");
+}
+
+.right-slider {
+  background-image: url("/storage/icons/next.svg");
+}
+
+.right-slider:active {
+  background-image: url("/storage/icons/keyboard-right-arrow-button.svg");
 }
 

@@ -18,6 +18,9 @@
   width:20px;
   height:20px;
 }
+.add-icon {
+  background-image: url('/storage/icons/add-plus-button.svg');
+}
 .edit-icon {
   background-image: url('/storage/icons/edit.svg');
 }
@@ -26,4 +29,16 @@
 }
 .ql-omega:after {
   content: "Ω";
+}
+.left-slider {
+  background-image: url('/storage/icons/back.svg');
+}
+.left-slider:active {
+  background-image: url('/storage/icons/keyboard-left-arrow-button.svg');
+}
+.right-slider {
+  background-image: url('/storage/icons/next.svg');
+}
+.right-slider:active {
+  background-image: url('/storage/icons/keyboard-right-arrow-button.svg');
 }

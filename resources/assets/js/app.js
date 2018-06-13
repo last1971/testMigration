@@ -49,9 +49,9 @@ Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#csrf-token').
  */
 
 Vue.component('userstable', require('./components/UsersTableComponent.vue'));
-Vue.component('useredit', require('./components/UserEditComponent.vue'));
-//Vue.component('htmleditor', require('./components/HtmlEditorComponent.vue'));
 Vue.component('articles-table-component',require('./components/ArticlestableComponent.vue'));
+Vue.component('useredit', require('./components/UserEditComponent.vue'));
+Vue.component('image-slider-component', require('./components/ImageSliderComponent.vue'));
 var app = new Vue({
     store,
     el: '#app',

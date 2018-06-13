@@ -20,6 +20,7 @@ Route::get('current-user', function(){
 }); //Получить пользователя
 Route::resource('users', 'UserController')->middleware('check.user');//пользователи
 Route::get('userstable',function(){ return view('userstable');})->middleware('check.admin')->name('userstable');//Таблица пользователей
+Route::get('articlestable')->middleware('check.employee', function() { return view('articlestable'); } );//Таблица статей
 Route::resource('userTypes', 'UserTypeController');//Типы пользователей
 Route::get('gitpull',function(){
     $ret = shell_exec('git pull');
@@ -27,4 +28,4 @@ Route::get('gitpull',function(){
 })->middleware('check.admin')->name('gitpull');//обновить
 Route::post('load-image','ImageController@upload');//загрузка картинки
 Route::resource('names', 'NameController');//Наименования
-Route::resource('articles','ArticleController');//Статьи
+Route::resource('articles','ArticleController')->middleware('check.employee');//Статьи
