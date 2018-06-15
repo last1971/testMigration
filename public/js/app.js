@@ -100181,7 +100181,7 @@ exports = module.exports = __webpack_require__(7)(false);
 
 
 // module
-exports.push([module.i, "\n.image-box[data-v-142245b8] {\n    height: 350px;\n    width: auto;\n    display:-webkit-box;\n    display:-ms-flexbox;\n    display:flex;\n    -webkit-box-orient:horizontal;\n    -webkit-box-direction:normal;\n        -ms-flex-flow:row nowrap;\n            flex-flow:row nowrap;\n    -webkit-box-pack:center;\n        -ms-flex-pack:center;\n            justify-content:center;\n    position:relative;\n}\n.image-picture[data-v-142245b8] {\n    height: 100%;\n    width: auto;\n}\n.image-point[data-v-142245b8] {\n    display:-webkit-box;\n    display:-ms-flexbox;\n    display:flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row nowrap;\n            flex-flow: row nowrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    position:absolute;\n    top: 90%;\n}\n.image-point div[data-v-142245b8] {\n    width:10px;\n    height:10px;\n    background-color:#c5c5c5;\n    border-radius:50%;\n    margin:5px 10px;\n}\n.image-point .image-select[data-v-142245b8] {\n    background-color:black;\n}\n.image-crud[data-v-142245b8] {\n    display:-webkit-box;\n    display:-ms-flexbox;\n    display:flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row nowrap;\n            flex-flow: row nowrap;\n    position:absolute;\n    left:0%;\n}\n.image-crud div[data-v-142245b8] {\n    margin:5px 10px;\n}\n", ""]);
+exports.push([module.i, "\n.image-box[data-v-142245b8] {\n    height: 350px;\n    width: auto;\n    display:-webkit-box;\n    display:-ms-flexbox;\n    display:flex;\n    -webkit-box-orient:horizontal;\n    -webkit-box-direction:normal;\n        -ms-flex-flow:row nowrap;\n            flex-flow:row nowrap;\n    -webkit-box-pack:center;\n        -ms-flex-pack:center;\n            justify-content:center;\n    position:relative;\n}\n.image-picture[data-v-142245b8] {\n    height: 100%;\n    width: auto;\n}\n.image-point[data-v-142245b8] {\n    display:-webkit-box;\n    display:-ms-flexbox;\n    display:flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row nowrap;\n            flex-flow: row nowrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    position:absolute;\n    top: 90%;\n}\n.image-point div[data-v-142245b8] {\n    width:10px;\n    height:10px;\n    background-color:#c5c5c5;\n    border-radius:50%;\n    margin:5px 10px;\n}\n.image-point .image-select[data-v-142245b8] {\n    background-color:black;\n}\n.image-crud[data-v-142245b8] {\n    display:-webkit-box;\n    display:-ms-flexbox;\n    display:flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n\n    position:absolute;\n    left:0%;\n}\n.image-crud div[data-v-142245b8] {\n    margin:5px 10px;\n}\n", ""]);
 
 // exports
 
@@ -100212,6 +100212,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['value'],
     data: function data() {
         return {
             ind: -1,
@@ -100248,8 +100249,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 console.log(err);
             });
         },
+        DeletePicture: function DeletePicture() {
+            if (this.ind >= 0) {
+                var oldInd = this.ind;
+                this.images.splice(oldInd, 1);
+                if (this.images.length == 0 || this.ind != 0) this.ind--;
+            }
+        },
         ImageSelect: function ImageSelect(index) {
             this.ind = index;
+        }
+    },
+    watch: {
+        value: function value(newVal, oldVal) {
+            this.images = newVal;
+            if (this.images.length > 0) this.ind = 0;
         }
     }
 });
@@ -100297,7 +100311,10 @@ var render = function() {
           on: { click: _vm.UploadPicture }
         }),
         _vm._v(" "),
-        _c("div", { staticClass: "btn btn-sm my-icons dustbin-icon" })
+        _c("div", {
+          staticClass: "btn btn-sm my-icons dustbin-icon",
+          on: { click: _vm.DeletePicture }
+        })
       ])
     ]),
     _vm._v(" "),

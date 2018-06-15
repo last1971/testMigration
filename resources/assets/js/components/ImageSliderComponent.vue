@@ -8,7 +8,7 @@
                 </div>
                 <div class="image-crud">
                     <div class="btn btn-sm my-icons add-icon" @click="UploadPicture"></div>
-                    <div class="btn btn-sm my-icons dustbin-icon"></div>
+                    <div class="btn btn-sm my-icons dustbin-icon" @click="DeletePicture"></div>
                 </div>
             </div>
             <div class="col-md-1 right-slider" @click="RightClick"></div>
@@ -18,6 +18,7 @@
 
 <script>
     export default {
+        props:['value'],
         data(){
             return{
                 ind:-1,
@@ -55,8 +56,23 @@
                         console.log(err);
                     })
             },
+            DeletePicture(){
+                if (this.ind>=0) {
+                    var oldInd = this.ind;
+                    this.images.splice(oldInd,1);
+                    if (this.images.length==0 || this.ind!=0)
+                        this.ind--;
+                }
+            },
             ImageSelect(index) {
                 this.ind = index;
+            }
+        },
+        watch:{
+            value: function(newVal, oldVal) {
+                this.images = newVal;
+                if (this.images.length>0)
+                    this.ind = 0;
             }
         }
     }
@@ -94,7 +110,8 @@
     }
     .image-crud {
         display:flex;
-        flex-flow: row nowrap;
+        flex-direction: column;
+
         position:absolute;
         left:0%;
     }
