@@ -20,6 +20,7 @@
 }
 .add-icon {
   background-image: url('/storage/icons/add-plus-button.svg');
+  background-size: 100%;
 }
 .edit-icon {
   background-image: url('/storage/icons/edit.svg');
@@ -32,13 +33,23 @@
 }
 .left-slider {
   background-image: url('/storage/icons/back.svg');
+  background-repeat: no-repeat;
+  background-position: 50%;
 }
 .left-slider:active {
-  background-image: url('/storage/icons/keyboard-left-arrow-button.svg');
+  background-image: url('/storage/icons/back.svg');
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-size: 30px 100%;
 }
 .right-slider {
   background-image: url('/storage/icons/next.svg');
+  background-repeat: no-repeat;
+  background-position: 50%;
 }
 .right-slider:active {
-  background-image: url('/storage/icons/keyboard-right-arrow-button.svg');
+  background-image: url('/storage/icons/next.svg');
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-size: 30px 100%;
 }

@@ -100181,7 +100181,7 @@ exports = module.exports = __webpack_require__(7)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n.image-box[data-v-142245b8] {\n    height: 350px;\n    width: auto;\n    display:-webkit-box;\n    display:-ms-flexbox;\n    display:flex;\n    -webkit-box-orient:horizontal;\n    -webkit-box-direction:normal;\n        -ms-flex-flow:row nowrap;\n            flex-flow:row nowrap;\n    -webkit-box-pack:center;\n        -ms-flex-pack:center;\n            justify-content:center;\n    position:relative;\n}\n.image-picture[data-v-142245b8] {\n    height: 100%;\n    width: auto;\n}\n.image-point[data-v-142245b8] {\n    display:-webkit-box;\n    display:-ms-flexbox;\n    display:flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row nowrap;\n            flex-flow: row nowrap;\n    -webkit-box-pack: center;\n        -ms-flex-pack: center;\n            justify-content: center;\n    position:absolute;\n    top: 90%;\n}\n.image-point div[data-v-142245b8] {\n    width:10px;\n    height:10px;\n    background-color:#c5c5c5;\n    border-radius:50%;\n    margin:5px 10px;\n}\n.image-point .image-select[data-v-142245b8] {\n    background-color:black;\n}\n.image-crud[data-v-142245b8] {\n    display:-webkit-box;\n    display:-ms-flexbox;\n    display:flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-flow: row nowrap;\n            flex-flow: row nowrap;\n    position:absolute;\n    left:0%;\n}\n.image-crud div[data-v-142245b8] {\n    margin:5px 10px;\n}\n", ""]);
 
 // exports
 
@@ -100205,21 +100205,51 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            index: 0,
-            images: ['images/W/WatsApp Image 2018-05-08 at 12.10.57.jpeg', 'images/p/photo_2018-03-25_08-12-01.jpg']
+            ind: -1,
+            images: []
         };
     },
 
     methods: {
         LeftClick: function LeftClick() {
-            if (this.index > 0) this.index--;
+            if (this.ind > 0) this.ind--;
         },
         RightClick: function RightClick() {
-            if (this.index < images.length - 1) this.index++;
+            if (this.ind < this.images.length - 1) this.ind++;
+        },
+        UploadPicture: function UploadPicture() {
+            this.$refs.SelectFile.click();
+        },
+        onFileChanged: function onFileChanged() {
+            var _this = this;
+
+            var formData = new FormData();
+            formData.append('image', this.$refs.SelectFile.files[0]);
+
+            axios({
+                url: 'pictures',
+                method: 'POST',
+                data: formData
+            }).then(function (result) {
+                // let url = result.data.url // Get url from response
+                // console.log(url);
+                _this.images.push(result.data);
+                _this.ind = _this.images.length - 1;
+            }).catch(function (err) {
+                console.log(err);
+            });
+        },
+        ImageSelect: function ImageSelect(index) {
+            this.ind = index;
         }
     }
 });
@@ -100238,8 +100268,37 @@ var render = function() {
       on: { click: _vm.LeftClick }
     }),
     _vm._v(" "),
-    _c("div", { staticClass: "col-md-9" }, [
-      _c("img", { attrs: { src: _vm.images[_vm.index] } })
+    _c("div", { staticClass: "col-md-10 image-box" }, [
+      _vm.ind >= 0
+        ? _c("img", {
+            staticClass: "image-picture",
+            attrs: { src: _vm.images[_vm.ind].path }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "image-point" },
+        _vm._l(_vm.images, function(image, index) {
+          return _c("div", {
+            class: { "image-select": index == _vm.ind },
+            on: {
+              click: function($event) {
+                _vm.ImageSelect(index)
+              }
+            }
+          })
+        })
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "image-crud" }, [
+        _c("div", {
+          staticClass: "btn btn-sm my-icons add-icon",
+          on: { click: _vm.UploadPicture }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "btn btn-sm my-icons dustbin-icon" })
+      ])
     ]),
     _vm._v(" "),
     _c("div", {
@@ -100247,21 +100306,15 @@ var render = function() {
       on: { click: _vm.RightClick }
     }),
     _vm._v(" "),
-    _vm._m(0)
+    _c("input", {
+      ref: "SelectFile",
+      staticStyle: { display: "none" },
+      attrs: { type: "file" },
+      on: { change: _vm.onFileChanged }
+    })
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-1" }, [
-      _c("div", { staticClass: "btn btn-sm my-icons add-icon" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "btn btn-sm my-icons dustbin-icon" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

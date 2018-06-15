@@ -42,6 +42,7 @@
                                         Администрирование <span class="caret"></span>
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdownAdmin">
+                                        <a class="dropdown-item" href="{{ route('articlestable') }}">Статьи</a>
                                         <a class="dropdown-item" href="{{ route('userstable') }}">Пользователи</a>
                                         <a class="dropdown-item" href="{{ route('gitpull') }}">Обновить с GitHub</a>
                                     </div>
