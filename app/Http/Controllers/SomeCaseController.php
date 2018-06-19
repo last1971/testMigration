@@ -2,25 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Article;
+use App\SomeCase;
+use App\Picture;
 use Illuminate\Http\Request;
 
-class ArticleController extends Controller
+class SomeCaseController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         //
-        $q = Article::join('names','articles.name_id','=','names.id')->with('name');
-        if ($request->q)
-            $q = $q->where('names.alias','like','%' . preg_replace('/[^а-яёА-ЯЁa-zA-Z0-9]/', '', $request->q ) . '%');
-        if ($request->ac)
-            return $q->orderBy('names.alias','ASC')->limit(10)->get();
-        return $q->orderBy('names.alias','ASC')->paginate(10);
+        return SomeCase::with('name')->with('article')->with('pictures')->paginate(10);
     }
 
     /**
@@ -31,6 +27,7 @@ class ArticleController extends Controller
     public function create()
     {
         //
+
     }
 
     /**
@@ -42,13 +39,14 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         //
-        $article = new Article;
-        $name = $request->name;
-        $article->name_id = $name['id'];
-        $article->short_text = $request->short_text;
-        $article->content = $request->get('content');
-        $article->save();
-        return response()->json(['message'=>'ok','id'=>$article->id]);
+        $case = new SomeCase;
+        $case->name_id = $request->name['id'];
+        $case->article_id = $request->article['id'];
+        $case->save();
+        $pictures = [];
+        foreach ($request->pictures as $picture) $pictures[] = ['picture_id'=>$picture['id']];
+        $case->pictures()->attach($pictures);
+        return response()->json(['message'=>'ok','id'=>$case->id]);
     }
 
     /**
@@ -87,13 +85,16 @@ class ArticleController extends Controller
         $this->validate($request, [
             'name.id' => 'required|gt:0',
         ]);
-        $article = Article::find($id);
+        $case = SomeCase::find($id);
         $name = $request->name;
-        $article->name_id = $name['id'];
-        $article->short_text = $request->short_text;
-        $article->content = $request->get('content');
-        $article->save();
+        $case->name_id = $name['id'];
+        if (isset($request->article))  $case->article_id = $request->article['id'];
+        $pictures = [];
+        foreach ($request->pictures as $picture) $pictures[] = $picture['id'];
+        $case->pictures()->sync($pictures);
+        $case->save();
         return response()->json(['message'=>'ok']);
+
     }
 
     /**
@@ -105,6 +106,5 @@ class ArticleController extends Controller
     public function destroy($id)
     {
         //
-        return Article::destroy($id);
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div>
+
         <vue-editor
             v-model="val"
             :editorOptions="editorSettings"
@@ -8,7 +8,7 @@
             @imageAdded="handleImageAdded"
             ref="myTextEditor"
         ></vue-editor>
-    </div>
+
 </template>
 
 <script>

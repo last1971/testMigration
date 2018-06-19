@@ -30,3 +30,4 @@ Route::post('load-image','ImageController@upload');//загрузка карти
 Route::resource('names', 'NameController');//Наименования
 Route::resource('articles','ArticleController')->middleware('check.employee');//Статьи
 Route::resource('pictures','PictureController')->middleware('check.employee');//картинки
+Route::resource('cases','SomeCaseController')->middleware('check.employee');//корпуса

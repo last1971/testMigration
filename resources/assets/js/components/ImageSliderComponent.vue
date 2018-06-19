@@ -38,23 +38,26 @@
                 this.$refs.SelectFile.click();
             },
             onFileChanged(){
-                var formData = new FormData();
-                formData.append('image', this.$refs.SelectFile.files[0])
+                if (this.$refs.SelectFile.files.length>0) {
+                    var formData = new FormData();
+                    formData.append('image', this.$refs.SelectFile.files[0])
 
-                axios({
-                    url: 'pictures',
-                    method: 'POST',
-                    data: formData
-                })
-                    .then((result) => {
-                       // let url = result.data.url // Get url from response
-                       // console.log(url);
-                       this.images.push(result.data);
-                       this.ind = this.images.length-1;
+                    axios({
+                        url: 'pictures',
+                        method: 'POST',
+                        data: formData
                     })
-                    .catch((err) => {
-                        console.log(err);
-                    })
+                        .then((result) => {
+                            // let url = result.data.url // Get url from response
+                            // console.log(url);
+                            this.images.push(result.data);
+                            this.ind = this.images.length - 1;
+                            this.$emit('input',this.images);
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                        })
+                }
             },
             DeletePicture(){
                 if (this.ind>=0) {
@@ -62,6 +65,7 @@
                     this.images.splice(oldInd,1);
                     if (this.images.length==0 || this.ind!=0)
                         this.ind--;
+                    this.$emit('input',this.images);
                 }
             },
             ImageSelect(index) {
@@ -70,9 +74,11 @@
         },
         watch:{
             value: function(newVal, oldVal) {
-                this.images = newVal;
-                if (this.images.length>0)
-                    this.ind = 0;
+                if (newVal != this.images) {
+                    this.images = newVal;
+                    if (this.images.length > 0)
+                        this.ind = 0;
+                }
             }
         }
     }

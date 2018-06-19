@@ -11,4 +11,8 @@ class Name extends Model
     {
         return $this->hasMany('App\Article');
     }
+    public function someCases()
+    {
+        return $this->hasMany('App\SomeCase');
+    }
 }

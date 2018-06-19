@@ -27,34 +27,40 @@
         },
         data() {
             return {
-                val: undefined,
-                aga: true
+                val: this.value,
+            }
+        },
+        mounted(){
+            if (this.val!==undefined){
+                this.$refs.autocomplete.setValue(this.val.name);
+                if (this.val.id==0)
+                    this.val = undefined;
             }
         },
         watch: {
             value: function(newVal, oldVal) { // watch it
-                if (this.aga) {
-                    if (newVal !== undefined)
+                if (this.val != newVal) {
+                    if (newVal !== undefined) {
                         this.$refs.autocomplete.setValue(newVal.name);
-                    this.val = newVal;
-                    this.aga = false;
-                } else {
-                    this.aga = true;
+                        if (newVal.id > 0)
+                            this.val = newVal;
+                        else
+                            this.val = undefined;
+                    } else {
+                        this.val = undefined;
+                    }
                 }
             },
             val: function() {
-                this.aga = false;
                 this.$emit('input',this.val);
             }
         },
         methods: {
             getData(obj){
                 this.val = obj;
-                this.$emit('input',this.val);
             },
             clearValue(){
                 this.val = undefined;
-                this.$emit('input',this.val);
             },
             checkValue(){
                 var that = this;
@@ -64,7 +70,6 @@
                             .then(response => {
                                 if (response.data.id != 0) {
                                     that.val = response.data;
-                                    that.$emit('input',this.val);
                                 }
                             })
                             .catch(e => {
@@ -77,7 +82,6 @@
                 axios.post('names',{name:this.$refs.autocomplete.type})
                     .then(response => {
                         this.val = response.data;
-                        this.$emit('input',this.val);
                     })
                     .catch(e => {console.log(e);});
             },

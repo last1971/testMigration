@@ -11,4 +11,9 @@ class Article extends Model
     {
         return $this->belongsTo('App\Name');
     }
+
+    public function someCases()
+    {
+        return $this->hasMany('App\SomeCase');
+    }
 }

@@ -19,7 +19,8 @@ Vue.use(vueBootstrap);
 
 const store = new Vuex.Store({
     state: {
-        user: {user_type_id:3}
+        user: {user_type_id:3},
+        routes: {articlestable:'articlestable'}
     },
     actions: {
         checkUser({commit}) {
@@ -36,6 +37,9 @@ const store = new Vuex.Store({
     getters: {
         user(state) {
             return state.user
+        },
+        routes(state) {
+            return state.routes
         }
     }
 })
@@ -51,8 +55,11 @@ Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#csrf-token').
 Vue.component('userstable', require('./components/UsersTableComponent.vue'));
 Vue.component('articles-table-component',require('./components/ArticlestableComponent.vue'));
 Vue.component('useredit', require('./components/UserEditComponent.vue'));
-Vue.component('image-slider-component', require('./components/ImageSliderComponent.vue'));
+Vue.component('case-edit-component', require('./components/CaseEditComponent.vue'));
 var app = new Vue({
     store,
     el: '#app',
+    data:{
+        article:{id:0,name_id:0,name:{id:0,name:''},pictures:[],article:{id:0}}
+    }
 });

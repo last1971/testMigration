@@ -25,7 +25,7 @@
             <input type="text"  class="form-control" v-model="value.short_text" placeholder="Аннотация"/>
         </div>
         <div class="form-group row">
-            <html-editor-component v-model="value.content" ref="htmleditor"></html-editor-component>
+            <html-editor-component v-model="value.content" ref="htmleditor" class="col-md-12"></html-editor-component>
         </div>
         <div class="form-group row">
 
@@ -57,11 +57,14 @@
         methods:{
             save () {
                 this.clearErrors();
-                axios.put(this.ApiUrl+'/'+this.value.id,this.value)
+                var newVal = this.value;
+                newVal.name_id = newVal.name.id;
+                axios.put(this.ApiUrl+'/'+this.value.id,newVal)
                     .then(response => {
                         this.success = true;
                         this.$emit('closearticlestable');
-                        this.$emit('input',this.value);
+                        if (newVal.id == 0) newVal.id = response.data.id;
+                        this.$emit('input',newVal);
                     }).catch(error => {
                         this.success = false;
                         this.errors =  error.response.data;
