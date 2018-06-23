@@ -15,7 +15,7 @@ class ArticleController extends Controller
     public function index(Request $request)
     {
         //
-        $q = Article::join('names','articles.name_id','=','names.id')->with('name');
+        $q = Article::join('names','articles.name_id','=','names.id')->select('articles.*')->with('name');
         if ($request->q)
             $q = $q->where('names.alias','like','%' . preg_replace('/[^а-яёА-ЯЁa-zA-Z0-9]/', '', $request->q ) . '%');
         if ($request->ac)

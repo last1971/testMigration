@@ -13,10 +13,14 @@ class SomeCaseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        return SomeCase::with('name')->with('article')->with('pictures')->paginate(10);
+
+        $query = SomeCase::join('names','name_id','=','names.id')->select('some_cases.id','some_cases.name_id','some_cases.article_id','some_cases.picture_id','names.alias')
+            ->with('picture','pictures','name','article','article.name');
+        if (isset($request->filter)) $query = $query->where('names.alias', 'like', '%' .  preg_replace('/[^а-яёА-ЯЁa-zA-Z0-9]/', '', $request->filter ) . '%');
+        return $query->paginate(10);
+
     }
 
     /**
@@ -41,7 +45,8 @@ class SomeCaseController extends Controller
         //
         $case = new SomeCase;
         $case->name_id = $request->name['id'];
-        $case->article_id = $request->article['id'];
+        if ($request->article['id']>0) $case->article_id = $request->article['id'];
+        if ($request->picture_id != null) $case->picture_id = $request->picture_id;
         $case->save();
         $pictures = [];
         foreach ($request->pictures as $picture) $pictures[] = ['picture_id'=>$picture['id']];
@@ -88,7 +93,8 @@ class SomeCaseController extends Controller
         $case = SomeCase::find($id);
         $name = $request->name;
         $case->name_id = $name['id'];
-        if (isset($request->article))  $case->article_id = $request->article['id'];
+        if (isset($request->article) && $request->article['id']>0)  $case->article_id = $request->article['id'];
+        if ($request->picture_id != null) $case->picture_id = $request->picture_id;
         $pictures = [];
         foreach ($request->pictures as $picture) $pictures[] = $picture['id'];
         $case->pictures()->sync($pictures);
@@ -106,5 +112,6 @@ class SomeCaseController extends Controller
     public function destroy($id)
     {
         //
+        return SomeCase::destroy($id);
     }
 }

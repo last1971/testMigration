@@ -53,7 +53,11 @@
             save () {
                 this.clearErrors();
                 var newValue = this.value;
-                if (newValue.article !== undefined && newValue.article.id>0) newValue.article_id = newValue.article.id;
+                if (newValue.article !== undefined && newValue.article != null && newValue.article.id>0) newValue.article_id = newValue.article.id;
+                if (newValue.pictures.length>0) {
+                    console.log(newValue.pictures);
+                    newValue.picture_id = newValue.pictures[this.$refs.pictures.ind].id;
+                }
                 if (newValue.name !== undefined && newValue.name.id>0) {
                     newValue.name_id = newValue.name.id;
                     axios.put(this.ApiUrl + '/' + this.value.id, newValue)

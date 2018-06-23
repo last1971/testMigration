@@ -78,6 +78,8 @@
                     this.images = newVal;
                     if (this.images.length > 0)
                         this.ind = 0;
+                    else
+                        this.ind = -1;
                 }
             }
         }

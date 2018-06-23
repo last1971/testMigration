@@ -44,9 +44,10 @@
         },
         watch: {
             value: function (newVal, oldVal) { // watch it
-                if (newVal != val) {
+                if (newVal != this.val) {
                     if (newVal !== undefined)
-                        this.$refs.autocomplete.setValue(newVal.name.name);
+                        if (newVal == null) this.$refs.autocomplete.setValue('');
+                        else this.$refs.autocomplete.setValue(newVal.name.name);
                     this.val = newVal;
                 }
             },
