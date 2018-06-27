@@ -21,6 +21,8 @@ Route::get('current-user', function(){
 Route::resource('users', 'UserController')->middleware('check.user');//пользователи
 Route::get('userstable',function(){ return view('userstable');})->middleware('check.admin')->name('userstable');//Таблица пользователей
 Route::get('articlestable', function() { return view('articlestable'); } )->middleware('check.employee')->name('articlestable');//Таблица статей
+Route::get('casestable', function() { return view('casestable'); } )->middleware('check.employee')->name('casestable');//Таблица корпусов
+Route::get('producerstable', function() { return view('producerstable'); } )->middleware('check.employee')->name('producerstable');//Таблица производителей
 Route::resource('userTypes', 'UserTypeController');//Типы пользователей
 Route::get('gitpull',function(){
     $ret = shell_exec('git pull');
@@ -31,3 +33,4 @@ Route::resource('names', 'NameController');//Наименования
 Route::resource('articles','ArticleController')->middleware('check.employee');//Статьи
 Route::resource('pictures','PictureController')->middleware('check.employee');//картинки
 Route::resource('cases','SomeCaseController')->middleware('check.employee');//корпуса
+Route::resource('producers','ProducerController')->middleware('check.employee');//производители

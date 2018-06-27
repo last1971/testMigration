@@ -15,4 +15,8 @@ class Name extends Model
     {
         return $this->hasMany('App\SomeCase');
     }
+    public function  producers()
+    {
+        return $this->hasMany('App\Producer');
+    }
 }

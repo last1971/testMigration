@@ -2,7 +2,7 @@
     <div>
         <div class="card-header">
             <div class="row">
-                <div class="col-md-6">Корпус</div>
+                <div class="col-md-6">Производитель</div>
                 <div class="text-danger text-md-right col-md-6" v-if="errors.message">
                     <em>
                         {{ errors.message }}
@@ -23,7 +23,7 @@
                 <article-select-component v-model="value.article" ref="article"></article-select-component>
             </div>
 
-                <image-slider-component v-model="value.pictures" ref="pictures"></image-slider-component>
+            <image-slider-component v-model="value.pictures" ref="pictures"></image-slider-component>
 
 
             <div class="form-group row">
@@ -44,7 +44,7 @@
         props:['value'],
         data() {
             return {
-                ApiUrl: 'cases',
+                ApiUrl: 'producers',
                 success: false,
                 errors: []
             }
@@ -62,7 +62,7 @@
                     axios.put(this.ApiUrl + '/' + this.value.id, newValue)
                         .then(response => {
                             this.success = true;
-                            this.$emit('closecasestable');
+                            this.$emit('close');
                             this.$emit('input', this.value);
                         }).catch(error => {
                             this.success = false;
@@ -71,11 +71,11 @@
                     )
                 } else {
                     this.success = false;
-                    this.errors = 'Отсутсвует название статьи';
+                    this.errors = 'Отсутсвует название производителя';
                 }
             },
             cancel () {
-                this.$emit('closecasestable');
+                this.$emit('close');
             },
             clearErrors () {
                 this.errors = [];

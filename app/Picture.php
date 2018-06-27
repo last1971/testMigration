@@ -17,4 +17,12 @@ class Picture extends Model
     {
         return $this->belongsToMany('App\SomeCase');
     }
+    public function someProducers()
+    {
+        return $this->hasMany('App\Producer');
+    }
+    public function Producers()
+    {
+        return $this->belongsToMany('App\Producer');
+    }
 }
