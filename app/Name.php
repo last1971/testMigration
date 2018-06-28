@@ -19,4 +19,8 @@ class Name extends Model
     {
         return $this->hasMany('App\Producer');
     }
+    public function  products()
+    {
+        return $this->hasMany('App\Product');
+    }
 }

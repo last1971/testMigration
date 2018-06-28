@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SomeCase extends Model
+class Product extends Model
 {
     //
     public function name()
@@ -19,12 +19,16 @@ class SomeCase extends Model
     {
         return $this->belongsTo('App\Article');
     }
+    public function producer()
+    {
+        return $this->belongsTo('App\Producer');
+    }
+    public function someCase()
+    {
+        return $this->belongsTo('App\SomeCase');
+    }
     public function pictures()
     {
         return $this->belongsToMany('App\Picture')->as('pictures');
-    }
-    public function  products()
-    {
-        return $this->hasMany('App\Product');
     }
 }

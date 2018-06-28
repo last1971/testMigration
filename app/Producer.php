@@ -23,4 +23,8 @@ class Producer extends Model
     {
         return $this->belongsToMany('App\Picture')->as('pictures');
     }
+    public function  products()
+    {
+        return $this->hasMany('App\Product');
+    }
 }

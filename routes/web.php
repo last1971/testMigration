@@ -34,3 +34,4 @@ Route::resource('articles','ArticleController')->middleware('check.employee');//
 Route::resource('pictures','PictureController')->middleware('check.employee');//картинки
 Route::resource('cases','SomeCaseController')->middleware('check.employee');//корпуса
 Route::resource('producers','ProducerController')->middleware('check.employee');//производители
+

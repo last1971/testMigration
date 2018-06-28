@@ -25,4 +25,12 @@ class Picture extends Model
     {
         return $this->belongsToMany('App\Producer');
     }
+    public function  someProducts()
+    {
+        return $this->hasMany('App\Product');
+    }
+    public function Products()
+    {
+        return $this->belongsToMany('App\Product');
+    }
 }
