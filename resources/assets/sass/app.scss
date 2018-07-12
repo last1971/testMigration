@@ -13,6 +13,7 @@
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
+//Icons
 .my-icons {
   display:inline-block;
   width:20px;
@@ -31,6 +32,7 @@
 .ql-omega:after {
   content: "Ω";
 }
+//Image-Slider
 .left-slider {
   background-image: url('/storage/icons/back.svg');
   background-repeat: no-repeat;
@@ -53,3 +55,9 @@
   background-position: 50%;
   background-size: 30px 100%;
 }
+//Autocomplete additional
+.autocomplete ul {
+  z-index: 3000;
+}
+
+

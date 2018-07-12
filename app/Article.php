@@ -24,4 +24,8 @@ class Article extends Model
     {
         return $this->hasMany('App\Product');
     }
+    public function  categories()
+    {
+        return $this->hasMany('App\Category');
+    }
 }

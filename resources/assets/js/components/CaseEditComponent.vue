@@ -54,7 +54,7 @@
                 this.clearErrors();
                 var newValue = this.value;
                 if (newValue.article !== undefined && newValue.article != null && newValue.article.id>0) newValue.article_id = newValue.article.id;
-                if (newValue.pictures.length>0) {
+                if (newValue.pictures != undefined && newValue.pictures.length>0) {
                     newValue.picture_id = newValue.pictures[this.$refs.pictures.ind].id;
                 }
                 if (newValue.name !== undefined && newValue.name.id>0) {
@@ -63,7 +63,8 @@
                         .then(response => {
                             this.success = true;
                             this.$emit('closecasestable');
-                            this.$emit('input', this.value);
+                            if (newValue.id == 0) newValue.id = response.data.id;
+                            this.$emit('input', newValue);
                         }).catch(error => {
                             this.success = false;
                             this.errors = error.response.data;
@@ -71,7 +72,7 @@
                     )
                 } else {
                     this.success = false;
-                    this.errors = 'Отсутсвует название статьи';
+                    this.errors = 'Отсутсвует название корпуса';
                 }
             },
             cancel () {

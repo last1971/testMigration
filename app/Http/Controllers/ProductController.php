@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Producer;
+use App\Product;
 use Illuminate\Http\Request;
 
-class ProducerController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,16 +15,17 @@ class ProducerController extends Controller
      */
     public function index(Request $request)
     {
+        //
         $per_page = 10;
         if ($request->per_page)
             $per_page = $request->per_page;
-        $query = Producer::join('names','name_id','=','names.id')->select('producers.*','names.alias')->with('picture','pictures','name','article','article.name');
-        if (isset($request->q)) $query =
-            $query->where('names.alias', 'like', '%' .  preg_replace('/[^а-яёА-ЯЁa-zA-Z0-9]/', '', $request->q ) . '%');
+        $query = Product::join('names','name_id','=','names.id')->select('products.*','names.alias')
+            ->with('picture','pictures','name','article','article.name','producer','producer.name','some_case','some_case.name');
+        if (isset($request->filter))
+            $query = $query->where('names.alias', 'like', '%' .  preg_replace('/[^а-яёА-ЯЁa-zA-Z0-9]/', '', $request->filter ) . '%');
         if ($request->ac)
             return $query->orderBy('names.alias','ASC')->limit($per_page)->get();
-        return $query->orderBy('names.alias','ASC')->paginate($per_page);
-
+        return $query->paginate($per_page);
     }
 
     /**
@@ -45,16 +47,17 @@ class ProducerController extends Controller
     public function store(Request $request)
     {
         //
-        $producer = new Producer;
-        $producer->name_id = $request->name['id'];
-        if ($request->article['id']>0) $producer->article_id = $request->article['id'];
-        if ($request->picture_id != null) $producer->picture_id = $request->picture_id;
-        $producer->save();
+        $product = new Product;
+        $product->name_id = $request->name['id'];
+        if ($request->article['id']>0) $product->article_id = $request->article['id'];
+        if ($request->picture_id != null) $product->picture_id = $request->picture_id;
+        if ($request->some_case_id != null) $product->some_case_id = $request->some_case_id;
+        if ($request->producer_id != null) $product->producer_id = $request->producer_id;
+        $product->save();
         $pictures = [];
         foreach ($request->pictures as $picture) $pictures[] = ['picture_id'=>$picture['id']];
-        $producer->pictures()->attach($pictures);
-        return response()->json(['message'=>'ok','id'=>$producer->id]);
-
+        $product->pictures()->attach($pictures);
+        return response()->json(['message'=>'ok','id'=>$product->id]);
     }
 
     /**
@@ -67,16 +70,15 @@ class ProducerController extends Controller
     {
         //
         if ($id == 0) {
-            $producers = Producer::join('names','producers.name_id','=','names.id')->where('names.name','=',request()->name);
-            if ($producers->count() == 1)
+            $products = Product::join('names','name_id','=','names.id')->where('names.name','=',request()->name);
+            if ($products->count() == 1)
             {
-                return $producers->get()->first();
+                return $products->get()->first();
             } else {
                 return response()->json(['id' => 0]);
             }
         }
-        return Producer::find($id);
-
+        return Product::find($id);
     }
 
     /**
@@ -104,15 +106,17 @@ class ProducerController extends Controller
         $this->validate($request, [
             'name.id' => 'required|gt:0',
         ]);
-        $producer = Producer::find($id);
+        $product = Product::find($id);
         $name = $request->name;
-        $producer->name_id = $name['id'];
-        if (isset($request->article) && $request->article['id']>0)  $producer->article_id = $request->article['id'];
-        if ($request->picture_id != null) $producer->picture_id = $request->picture_id;
+        $product->name_id = $name['id'];
+        if (isset($request->article) && $request->article['id']>0)  $product->article_id = $request->article['id'];
+        if ($request->picture_id != null) $product->picture_id = $request->picture_id;
+        if ($request->some_case_id != null) $product->some_case_id = $request->some_case_id;
+        if ($request->producer_id != null) $product->producer_id = $request->producer_id;
         $pictures = [];
         foreach ($request->pictures as $picture) $pictures[] = $picture['id'];
-        $producer->pictures()->sync($pictures);
-        $producer->save();
+        $product->pictures()->sync($pictures);
+        $product->save();
         return response()->json(['message'=>'ok']);
     }
 
@@ -125,5 +129,6 @@ class ProducerController extends Controller
     public function destroy($id)
     {
         //
+        return Product::destroy($id);
     }
 }

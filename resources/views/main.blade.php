@@ -2,6 +2,6 @@
 
 @section('content')
     <h1 class="row justify-content-center">Прувет!</h1>
-    <case-table-component api-url="/cases"></case-table-component>
+    <categories-tree-component node_id="0" level="0"></categories-tree-component>
 
 @endsection

@@ -64,8 +64,8 @@
             },
             checkValue(){
                 var that = this;
-                setTimeout(function() {
-                    if (that.val === undefined && that.$refs.autocomplete.type.length>0) {
+                Vue.nextTick(function () {
+                    if (that.val === undefined && that.$refs.autocomplete !== undefined && that.$refs.autocomplete.type.length>0) {
                         axios.get('names/0?name=' + that.$refs.autocomplete.type)
                             .then(response => {
                                 if (response.data.id != 0) {
@@ -76,7 +76,7 @@
                                 console.log(e);
                             });
                     }
-                },125);
+                });
             },
             handleOk(){
                 axios.post('names',{name:this.$refs.autocomplete.type})

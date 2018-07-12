@@ -2,7 +2,7 @@
     <div>
         <div class="card-header">
             <div class="row">
-                <div class="col-md-6">Производитель</div>
+                <div class="col-md-6">Продукт</div>
                 <div class="text-danger text-md-right col-md-6" v-if="errors.message">
                     <em>
                         {{ errors.message }}
@@ -22,10 +22,13 @@
             <div class="form-group row">
                 <article-select-component v-model="value.article" ref="article"></article-select-component>
             </div>
-
+            <div class="form-group row">
+                <producer-select-component v-model="value.producer" ref="article"></producer-select-component>
+            </div>
+            <div class="form-group row">
+                <case-select-component v-model="value.some_case" ref="article"></case-select-component>
+            </div>
             <image-slider-component v-model="value.pictures" ref="pictures"></image-slider-component>
-
-
             <div class="form-group row">
                 <b-button variant="primary" @click="save" class="col-md-4 offset-md-2">Сохранить</b-button>
                 <b-button variant="danger" @click="cancel" class="col-md-4">Отменить</b-button>
@@ -38,13 +41,16 @@
     import NameComponent from "./NameComponent";
     import ImageSliderComponent from "./ImageSliderComponent";
     import ArticleSelectComponent from "./ArticleSelectComponent";
-    import  bButton from 'bootstrap-vue/es/components/button/button';
+    import bButton from 'bootstrap-vue/es/components/button/button';
+    import ProducerSelectComponent from "./ProducerSelectComponent";
+    import CaseSelectComponent from "./CaseSelectComponent";
     export default {
-        components: {ArticleSelectComponent,NameComponent, ImageSliderComponent, bButton},
-        props:['value'],
+        components: {
+            CaseSelectComponent,
+            ProducerSelectComponent, ArticleSelectComponent,NameComponent, ImageSliderComponent, bButton},
+        props:['value','ApiUrl'],
         data() {
             return {
-                ApiUrl: 'producers',
                 success: false,
                 errors: []
             }
@@ -54,6 +60,8 @@
                 this.clearErrors();
                 var newValue = this.value;
                 if (newValue.article !== undefined && newValue.article != null && newValue.article.id>0) newValue.article_id = newValue.article.id;
+                if (newValue.producer !== undefined && newValue.producer != null && newValue.producer.id>0) newValue.producer_id = newValue.producer.id;
+                if (newValue.some_case !== undefined && newValue.some_case != null && newValue.some_case.id>0) newValue.some_case_id = newValue.some_case.id;
                 if (newValue.pictures.length>0) {
                     newValue.picture_id = newValue.pictures[this.$refs.pictures.ind].id;
                 }
@@ -72,7 +80,7 @@
                     )
                 } else {
                     this.success = false;
-                    this.errors = 'Отсутсвует название производителя';
+                    this.errors = 'Отсутсвует название продукта';
                 }
             },
             cancel () {

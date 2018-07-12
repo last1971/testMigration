@@ -57,6 +57,8 @@ Vue.component('articles-table-component',require('./components/ArticlestableComp
 Vue.component('useredit', require('./components/UserEditComponent.vue'));
 Vue.component('case-table-component', require('./components/CaseTableComponent.vue'));
 Vue.component('producer-table-component', require('./components/ProducerTableComponent.vue'));
+Vue.component('product-table-component', require('./components/ProductTableComponent.vue'));
+Vue.component('categories-tree-component', require('./components/CategoriesTreeComponent.vue'));
 var app = new Vue({
     store,
     el: '#app',

@@ -24,8 +24,8 @@ class CreateProductsTable extends Migration
             $table->foreign('name_id')->references('id')->on('names');
             $table->foreign('picture_id')->references('id')->on('pictures');
             $table->foreign('article_id')->references('id')->on('articles');
-            $table->foreign('producer_id')->reference('id')->on('producers');
-            $table->foreign('some_case_id')->reference('id')->on('some_cases');
+            $table->foreign('producer_id')->references('id')->on('producers');
+            $table->foreign('some_case_id')->references('id')->on('some_cases');
         });
         Schema::create('picture_product', function (Blueprint $table) {
             $table->unsignedInteger('product_id');

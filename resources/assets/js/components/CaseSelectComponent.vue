@@ -5,7 +5,7 @@
                           url="cases"
                           :customParams="{ ac: 1 }"
                           anchor="name.name"
-                          label="article.short_text"
+                          label=""
                           :classes="{ wrapper: 'col-md-8', input: 'form-control', list: 'data-list', item: 'data-list-item' }"
                           :on-select="getData"
                           :on-input="clearValue"

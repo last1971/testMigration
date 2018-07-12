@@ -33,4 +33,9 @@ class Picture extends Model
     {
         return $this->belongsToMany('App\Product');
     }
+    public function  categories()
+    {
+        return $this->hasMany('App\Category');
+    }
+
 }

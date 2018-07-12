@@ -23,7 +23,7 @@ class Product extends Model
     {
         return $this->belongsTo('App\Producer');
     }
-    public function someCase()
+    public function some_case()
     {
         return $this->belongsTo('App\SomeCase');
     }

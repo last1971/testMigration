@@ -5,7 +5,7 @@
                           url="producers"
                           :customParams="{ ac: 1 }"
                           anchor="name.name"
-                          label="article.short_text"
+                          label=""
                           :classes="{ wrapper: 'col-md-8', input: 'form-control', list: 'data-list', item: 'data-list-item' }"
                           :on-select="getData"
                           :on-input="clearValue"
@@ -15,7 +15,7 @@
             <b-button v-if="val===undefined" class="col-md-4" @click="handleOk">Добавить</b-button>
         </div>
         <div class="row" v-if="add_visible">
-            <case-edit-component v-model="exch_val" class="col-md-12" v-on:close="CloseEdit"></case-edit-component>
+            <producer-edit-component v-model="exch_val" class="col-md-12" v-on:close="CloseEdit"></producer-edit-component>
         </div>
     </div>
 </template>

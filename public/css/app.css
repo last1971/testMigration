@@ -11418,3 +11418,7 @@ a.text-dark:focus {
   background-size: 30px 100%;
 }
 
+.autocomplete ul {
+  z-index: 3000;
+}
+

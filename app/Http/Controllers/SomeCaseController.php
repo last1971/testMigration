@@ -15,11 +15,16 @@ class SomeCaseController extends Controller
      */
     public function index(Request $request)
     {
-
+        $per_page = 10;
+        if ($request->per_page)
+            $per_page = $request->per_page;
         $query = SomeCase::join('names','name_id','=','names.id')->select('some_cases.id','some_cases.name_id','some_cases.article_id','some_cases.picture_id','names.alias')
             ->with('picture','pictures','name','article','article.name');
-        if (isset($request->filter)) $query = $query->where('names.alias', 'like', '%' .  preg_replace('/[^а-яёА-ЯЁa-zA-Z0-9]/', '', $request->filter ) . '%');
-        return $query->paginate(10);
+        if (isset($request->filter))
+            $query = $query->where('names.alias', 'like', '%' .  preg_replace('/[^а-яёА-ЯЁa-zA-Z0-9]/', '', $request->filter ) . '%');
+        if ($request->ac)
+            return $query->orderBy('names.alias','ASC')->limit($per_page)->get();
+        return $query->paginate($per_page);
 
     }
 
@@ -45,12 +50,14 @@ class SomeCaseController extends Controller
         //
         $case = new SomeCase;
         $case->name_id = $request->name['id'];
-        if ($request->article['id']>0) $case->article_id = $request->article['id'];
+        if (isset($request->article['id']) && $request->article['id']>0) $case->article_id = $request->article['id'];
         if ($request->picture_id != null) $case->picture_id = $request->picture_id;
         $case->save();
         $pictures = [];
-        foreach ($request->pictures as $picture) $pictures[] = ['picture_id'=>$picture['id']];
-        $case->pictures()->attach($pictures);
+        if (isset($request->pictures)) {
+            foreach ($request->pictures as $picture) $pictures[] = ['picture_id' => $picture['id']];
+            $case->pictures()->attach($pictures);
+        }
         return response()->json(['message'=>'ok','id'=>$case->id]);
     }
 
@@ -63,6 +70,17 @@ class SomeCaseController extends Controller
     public function show($id)
     {
         //
+        if ($id == 0) {
+            $cases = SomeCase::join('names','some_cases.name_id','=','names.id')->where('names.name','=',request()->name);
+            if ($cases->count() == 1)
+            {
+                return $cases->get()->first();
+            } else {
+                return response()->json(['id' => 0]);
+            }
+        }
+        return SomeCase::find($id);
+
     }
 
     /**
@@ -96,8 +114,10 @@ class SomeCaseController extends Controller
         if (isset($request->article) && $request->article['id']>0)  $case->article_id = $request->article['id'];
         if ($request->picture_id != null) $case->picture_id = $request->picture_id;
         $pictures = [];
-        foreach ($request->pictures as $picture) $pictures[] = $picture['id'];
-        $case->pictures()->sync($pictures);
+        if (isset($request->pictures)) {
+            foreach ($request->pictures as $picture) $pictures[] = $picture['id'];
+            $case->pictures()->sync($pictures);
+        }
         $case->save();
         return response()->json(['message'=>'ok']);
 

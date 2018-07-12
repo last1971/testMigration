@@ -15,12 +15,15 @@ class ArticleController extends Controller
     public function index(Request $request)
     {
         //
+        $per_page = 10;
+        if ($request->per_page)
+            $per_page = $request->per_page;
         $q = Article::join('names','articles.name_id','=','names.id')->select('articles.*')->with('name');
         if ($request->q)
             $q = $q->where('names.alias','like','%' . preg_replace('/[^а-яёА-ЯЁa-zA-Z0-9]/', '', $request->q ) . '%');
         if ($request->ac)
-            return $q->orderBy('names.alias','ASC')->limit(10)->get();
-        return $q->orderBy('names.alias','ASC')->paginate(10);
+            return $q->orderBy('names.alias','ASC')->limit($per_page)->get();
+        return $q->orderBy('names.alias','ASC')->paginate($per_page);
     }
 
     /**
@@ -60,6 +63,16 @@ class ArticleController extends Controller
     public function show($id)
     {
         //
+        if ($id == 0) {
+            $articles = Article::join('names','articles.name_id','=','names.id')->where('names.name','=',request()->name);
+            if ($articles->count() == 1)
+            {
+                return $articles->get()->first();
+            } else {
+                return response()->json(['id' => 0]);
+            }
+        }
+        return Article::find($id);
     }
 
     /**
