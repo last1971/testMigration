@@ -23,6 +23,10 @@ class Product extends Model
     {
         return $this->belongsTo('App\Producer');
     }
+    public function category()
+    {
+        return $this->belongsTo('App\Category');
+    }
     public function some_case()
     {
         return $this->belongsTo('App\SomeCase');

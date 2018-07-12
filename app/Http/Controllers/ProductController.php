@@ -20,7 +20,7 @@ class ProductController extends Controller
         if ($request->per_page)
             $per_page = $request->per_page;
         $query = Product::join('names','name_id','=','names.id')->select('products.*','names.alias')
-            ->with('picture','pictures','name','article','article.name','producer','producer.name','some_case','some_case.name');
+            ->with('picture','pictures','name','article','article.name','producer','producer.name','some_case','some_case.name','category','category.name');
         if (isset($request->filter))
             $query = $query->where('names.alias', 'like', '%' .  preg_replace('/[^а-яёА-ЯЁa-zA-Z0-9]/', '', $request->filter ) . '%');
         if ($request->ac)
@@ -113,6 +113,7 @@ class ProductController extends Controller
         if ($request->picture_id != null) $product->picture_id = $request->picture_id;
         if ($request->some_case_id != null) $product->some_case_id = $request->some_case_id;
         if ($request->producer_id != null) $product->producer_id = $request->producer_id;
+        if ($request->category_id != null) $product->category_id = $request->category_id;
         $pictures = [];
         foreach ($request->pictures as $picture) $pictures[] = $picture['id'];
         $product->pictures()->sync($pictures);

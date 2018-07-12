@@ -16,6 +16,11 @@
             </div>
         </div>
         <div class="card-body">
+            <div class="form-group row ml-2">
+                <div v-if="value.category" @click="SelectCategory">{{value.category.name.name}}</div>
+                <div v-else @click="SelectCategory">Без категории</div>
+                <categories-tree-component v-if="select_category" v-model="value.category" @input="SelectCategory"></categories-tree-component>
+            </div>
             <div class="form-group row">
                 <name-component v-model="value.name" ref="name"></name-component>
             </div>
@@ -44,15 +49,17 @@
     import bButton from 'bootstrap-vue/es/components/button/button';
     import ProducerSelectComponent from "./ProducerSelectComponent";
     import CaseSelectComponent from "./CaseSelectComponent";
+    import CategoriesTreeComponent from "./CategoriesTreeComponent";
     export default {
         components: {
             CaseSelectComponent,
-            ProducerSelectComponent, ArticleSelectComponent,NameComponent, ImageSliderComponent, bButton},
+            ProducerSelectComponent, ArticleSelectComponent,NameComponent, ImageSliderComponent, bButton, CategoriesTreeComponent},
         props:['value','ApiUrl'],
         data() {
             return {
                 success: false,
-                errors: []
+                errors: [],
+                select_category: false
             }
         },
         methods:{
@@ -61,6 +68,7 @@
                 var newValue = this.value;
                 if (newValue.article !== undefined && newValue.article != null && newValue.article.id>0) newValue.article_id = newValue.article.id;
                 if (newValue.producer !== undefined && newValue.producer != null && newValue.producer.id>0) newValue.producer_id = newValue.producer.id;
+                if (newValue.category !== undefined && newValue.category != null && newValue.category.id>0) newValue.category_id = newValue.category.id;
                 if (newValue.some_case !== undefined && newValue.some_case != null && newValue.some_case.id>0) newValue.some_case_id = newValue.some_case.id;
                 if (newValue.pictures.length>0) {
                     newValue.picture_id = newValue.pictures[this.$refs.pictures.ind].id;
@@ -90,6 +98,9 @@
                 this.errors = [];
                 this.success = false;
             },
+            SelectCategory() {
+                this.select_category = ! this.select_category;
+            }
         },
     }
 </script>

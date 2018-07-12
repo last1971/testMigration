@@ -102637,7 +102637,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -102659,6 +102659,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ProducerSelectComponent___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__ProducerSelectComponent__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__CaseSelectComponent__ = __webpack_require__(415);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__CaseSelectComponent___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__CaseSelectComponent__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__CategoriesTreeComponent__ = __webpack_require__(422);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__CategoriesTreeComponent___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__CategoriesTreeComponent__);
 //
 //
 //
@@ -102698,6 +102700,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 
@@ -102708,12 +102716,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
         CaseSelectComponent: __WEBPACK_IMPORTED_MODULE_5__CaseSelectComponent___default.a,
-        ProducerSelectComponent: __WEBPACK_IMPORTED_MODULE_4__ProducerSelectComponent___default.a, ArticleSelectComponent: __WEBPACK_IMPORTED_MODULE_2__ArticleSelectComponent___default.a, NameComponent: __WEBPACK_IMPORTED_MODULE_0__NameComponent___default.a, ImageSliderComponent: __WEBPACK_IMPORTED_MODULE_1__ImageSliderComponent___default.a, bButton: __WEBPACK_IMPORTED_MODULE_3_bootstrap_vue_es_components_button_button__["a" /* default */] },
+        ProducerSelectComponent: __WEBPACK_IMPORTED_MODULE_4__ProducerSelectComponent___default.a, ArticleSelectComponent: __WEBPACK_IMPORTED_MODULE_2__ArticleSelectComponent___default.a, NameComponent: __WEBPACK_IMPORTED_MODULE_0__NameComponent___default.a, ImageSliderComponent: __WEBPACK_IMPORTED_MODULE_1__ImageSliderComponent___default.a, bButton: __WEBPACK_IMPORTED_MODULE_3_bootstrap_vue_es_components_button_button__["a" /* default */], CategoriesTreeComponent: __WEBPACK_IMPORTED_MODULE_6__CategoriesTreeComponent___default.a },
     props: ['value', 'ApiUrl'],
     data: function data() {
         return {
             success: false,
-            errors: []
+            errors: [],
+            select_category: false
         };
     },
 
@@ -102725,6 +102734,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var newValue = this.value;
             if (newValue.article !== undefined && newValue.article != null && newValue.article.id > 0) newValue.article_id = newValue.article.id;
             if (newValue.producer !== undefined && newValue.producer != null && newValue.producer.id > 0) newValue.producer_id = newValue.producer.id;
+            if (newValue.category !== undefined && newValue.category != null && newValue.category.id > 0) newValue.category_id = newValue.category.id;
             if (newValue.some_case !== undefined && newValue.some_case != null && newValue.some_case.id > 0) newValue.some_case_id = newValue.some_case.id;
             if (newValue.pictures.length > 0) {
                 newValue.picture_id = newValue.pictures[this.$refs.pictures.ind].id;
@@ -102751,6 +102761,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         clearErrors: function clearErrors() {
             this.errors = [];
             this.success = false;
+        },
+        SelectCategory: function SelectCategory() {
+            this.select_category = !this.select_category;
         }
     }
 });
@@ -103334,6 +103347,34 @@ var render = function() {
       [
         _c(
           "div",
+          { staticClass: "form-group row ml-2" },
+          [
+            _vm.value.category
+              ? _c("div", { on: { click: _vm.SelectCategory } }, [
+                  _vm._v(_vm._s(_vm.value.category.name.name))
+                ])
+              : _c("div", { on: { click: _vm.SelectCategory } }, [
+                  _vm._v("Без категории")
+                ]),
+            _vm._v(" "),
+            _vm.select_category
+              ? _c("categories-tree-component", {
+                  on: { input: _vm.SelectCategory },
+                  model: {
+                    value: _vm.value.category,
+                    callback: function($$v) {
+                      _vm.$set(_vm.value, "category", $$v)
+                    },
+                    expression: "value.category"
+                  }
+                })
+              : _vm._e()
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
           { staticClass: "form-group row" },
           [
             _c("name-component", {
@@ -103766,16 +103807,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: { CategoryEditComponent: __WEBPACK_IMPORTED_MODULE_1__CategoryEditComponent___default.a, bButton: __WEBPACK_IMPORTED_MODULE_0_bootstrap_vue_es_components_button_button__["a" /* default */] },
     name: "CategoriesTreeComponent",
-    props: ['node_id', 'level'],
+    props: ['node_id', 'level', 'value'],
     data: function data() {
         return {
             nodes: [],
             node: { id: 0, name: { id: 0, name: '' }, article: { id: 0, name_id: 0, name: { id: 0, name: '' } }, picture: { id: 0, path: '' } },
             editing: false,
-            expanded: 0
+            expanded: 0,
+            exch_value: { id: 0, name: { id: 0, name: '' }, article: { id: 0, name_id: 0, name: { id: 0, name: '' } }, picture: { id: 0, path: '' } }
         };
     },
     mounted: function mounted() {
+        this.exch_value = this.value;
         this.$store.dispatch('checkUser');
         this.refresh();
     },
@@ -103811,6 +103854,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         CloseEdit: function CloseEdit() {
             this.editing = false;
             this.refresh();
+        },
+        Back: function Back() {
+            this.$emit('input', this.exch_value);
         }
     }
 });
@@ -104374,7 +104420,7 @@ var render = function() {
                     staticClass: "ml-2",
                     on: {
                       click: function($event) {
-                        _vm.$emit("select", node)
+                        _vm.$emit("input", node)
                       }
                     }
                   },
@@ -104423,14 +104469,18 @@ var render = function() {
                 "div",
                 { staticClass: "row" },
                 [
-                  _c(
-                    "categories-tree-component",
-                    {
-                      staticClass: "ml-2",
-                      attrs: { level: node.level + 1, node_id: node.id }
-                    },
-                    [_vm._v("test")]
-                  )
+                  _c("categories-tree-component", {
+                    staticClass: "ml-2",
+                    attrs: { level: node.level + 1, node_id: node.id },
+                    on: { input: _vm.Back },
+                    model: {
+                      value: _vm.exch_value,
+                      callback: function($$v) {
+                        _vm.exch_value = $$v
+                      },
+                      expression: "exch_value"
+                    }
+                  })
                 ],
                 1
               )

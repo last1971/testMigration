@@ -8,14 +8,14 @@
                     <i v-if="node.lft+1!=node.rgt && node.collapsed" class="tree-collapsed tree-icon ml-0"  @click="toggle(node)"></i>
                     <i v-else-if="!node.collapsed" class="tree-not-collapsed tree-icon ml-0" @click="toggle(node)"></i>
                     <i v-else class="tree-leaf tree-icon ml-0"></i>
-                    <div class="ml-2" v-if="node.name" @click="$emit('select',node)">{{node.name.name}}</div>
+                    <div class="ml-2" v-if="node.name" @click="$emit('input',node)">{{node.name.name}}</div>
                     <div class="ml-2" v-else>Редактируется...</div>
                     <i v-if="$store.state.user.id == 1" class="edit-icon tree-icon ml-2" @click="save(node.id,node)"></i>
                     <i v-if="$store.state.user.id == 1" class="add-icon tree-icon ml-2" @click="save(node.id)"></i>
                     <i v-if="$store.state.user.id == 1 && node.lft+1==node.rgt" class="dustbin-icon tree-icon ml-2" @click="remove(node.id)"></i>
             </div>
             <div class="row"  v-if="node.lft+1!=node.rgt && !node.collapsed">
-                <categories-tree-component :level="node.level+1" :node_id="node.id" class="ml-2">test</categories-tree-component>
+                <categories-tree-component :level="node.level+1" :node_id="node.id" class="ml-2" v-model="exch_value" @input="Back"></categories-tree-component>
             </div>
         </div>
         <category-edit-component v-model="node" :expanded="expanded" ref="edit" v-if="editing" v-on:close="CloseEdit"></category-edit-component>
@@ -28,16 +28,18 @@
     export default {
         components: {CategoryEditComponent, bButton},
         name: "CategoriesTreeComponent",
-        props: ['node_id','level'],
+        props: ['node_id','level','value'],
         data() {
             return {
                 nodes:[],
                 node:{id:0,name:{id:0,name:''},article:{id:0,name_id:0,name:{id:0,name:''}},picture:{id:0,path:''}},
                 editing:false,
                 expanded:0,
+                exch_value:{id:0,name:{id:0,name:''},article:{id:0,name_id:0,name:{id:0,name:''}},picture:{id:0,path:''}}
             }
         },
         mounted() {
+            this.exch_value = this.value;
             this.$store.dispatch('checkUser');
             this.refresh();
         },
@@ -68,6 +70,9 @@
             CloseEdit() {
                 this.editing=false;
                 this.refresh();
+            },
+            Back() {
+                this.$emit('input',this.exch_value);
             }
         }
     }
