@@ -1,31 +1,10 @@
 <template>
     <div>
-        <div class="card-header">
-            <div class="row">
-                <div class="col-md-6">Корпус</div>
-                <div class="text-danger text-md-right col-md-6" v-if="errors.message">
-                    <em>
-                        {{ errors.message }}
-                    </em>
-                </div>
-                <div class="text-success text-md-right col-md-6" v-if="success">
-                    <em>
-                        Данные изменены
-                    </em>
-                </div>
-            </div>
-        </div>
+        <edit-header-component :header="'Склад ' + firmname" :message="errors.message" :success="success"></edit-header-component>
         <div class="card-body">
             <div class="form-group row">
                 <name-component v-model="value.name" ref="name"></name-component>
             </div>
-            <div class="form-group row">
-                <article-select-component v-model="value.article" ref="article"></article-select-component>
-            </div>
-
-                <image-slider-component v-model="value.pictures" ref="pictures"></image-slider-component>
-
-
             <div class="form-group row">
                 <b-button variant="primary" @click="save" class="col-md-4 offset-md-2">Сохранить</b-button>
                 <b-button variant="danger" @click="cancel" class="col-md-4">Отменить</b-button>
@@ -35,16 +14,16 @@
 </template>
 
 <script>
-    import NameComponent from "./NameComponent";
-    import ImageSliderComponent from "./ImageSliderComponent";
-    import ArticleSelectComponent from "./ArticleSelectComponent";
+    import NameComponent from "../NameComponent";
     import  bButton from 'bootstrap-vue/es/components/button/button';
+    import EditHeaderComponent from "../EditHeaderComponent";
     export default {
-        components: {ArticleSelectComponent,NameComponent, ImageSliderComponent, bButton},
-        props:['value'],
+        components: {
+            EditHeaderComponent, NameComponent, bButton},
+        props:['value','firmname'],
         data() {
             return {
-                ApiUrl: 'cases',
+                ApiUrl: 'stores',
                 success: false,
                 errors: []
             }
@@ -53,18 +32,14 @@
             save () {
                 this.clearErrors();
                 var newValue = this.value;
-                if (newValue.article !== undefined && newValue.article != null && newValue.article.id>0) newValue.article_id = newValue.article.id;
-                if (newValue.pictures != undefined && newValue.pictures.length>0) {
-                    newValue.picture_id = newValue.pictures[this.$refs.pictures.ind].id;
-                }
                 if (newValue.name !== undefined && newValue.name.id>0) {
                     newValue.name_id = newValue.name.id;
                     axios.put(this.ApiUrl + '/' + this.value.id, newValue)
                         .then(response => {
                             this.success = true;
-                            this.$emit('closecasestable');
                             if (newValue.id == 0) newValue.id = response.data.id;
                             this.$emit('input', newValue);
+                            this.$emit('close');
                         }).catch(error => {
                             this.success = false;
                             this.errors = error.response.data;
@@ -72,11 +47,11 @@
                     )
                 } else {
                     this.success = false;
-                    this.errors = 'Отсутсвует название корпуса';
+                    this.errors = 'Отсутсвует название фирмы';
                 }
             },
             cancel () {
-                this.$emit('closecasestable');
+                this.$emit('close');
             },
             clearErrors () {
                 this.errors = [];

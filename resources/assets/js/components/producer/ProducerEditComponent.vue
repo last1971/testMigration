@@ -2,7 +2,7 @@
     <div>
         <div class="card-header">
             <div class="row">
-                <div class="col-md-6">Категория</div>
+                <div class="col-md-6">Производитель</div>
                 <div class="text-danger text-md-right col-md-6" v-if="errors.message">
                     <em>
                         {{ errors.message }}
@@ -22,9 +22,10 @@
             <div class="form-group row">
                 <article-select-component v-model="value.article" ref="article"></article-select-component>
             </div>
-            <div class="form-group row">
-                <image-select-component v-model="value.picture" ref="picture"></image-select-component>
-            </div>
+
+            <image-slider-component v-model="value.pictures" ref="pictures"></image-slider-component>
+
+
             <div class="form-group row">
                 <b-button variant="primary" @click="save" class="col-md-4 offset-md-2">Сохранить</b-button>
                 <b-button variant="danger" @click="cancel" class="col-md-4">Отменить</b-button>
@@ -34,17 +35,16 @@
 </template>
 
 <script>
-    import NameComponent from "./NameComponent";
-    import ImageSliderComponent from "./ImageSliderComponent";
-    import ArticleSelectComponent from "./ArticleSelectComponent";
+    import NameComponent from "../NameComponent";
+    import ImageSliderComponent from "../ImageSliderComponent";
+    import ArticleSelectComponent from "../article/ArticleSelectComponent";
     import  bButton from 'bootstrap-vue/es/components/button/button';
-    import ImageSelectComponent from "./ImageSelectComponent";
     export default {
-        components: {ImageSelectComponent, ArticleSelectComponent,NameComponent, ImageSliderComponent, bButton},
-        props:['value','expanded'],
+        components: {ArticleSelectComponent,NameComponent, ImageSliderComponent, bButton},
+        props:['value'],
         data() {
             return {
-                ApiUrl: 'categories',
+                ApiUrl: 'producers',
                 success: false,
                 errors: []
             }
@@ -54,12 +54,11 @@
                 this.clearErrors();
                 var newValue = this.value;
                 if (newValue.article !== undefined && newValue.article != null && newValue.article.id>0) newValue.article_id = newValue.article.id;
-                if (newValue.picture != undefined && newValue.picture != null && newValue.picture.id>0 ) {
-                    newValue.picture_id = newValue.picture.id;
+                if (newValue.pictures && newValue.pictures.length>0) {
+                    newValue.picture_id = newValue.pictures[this.$refs.pictures.ind].id;
                 }
                 if (newValue.name !== undefined && newValue.name.id>0) {
                     newValue.name_id = newValue.name.id;
-                    newValue.expanded = this.expanded;
                     axios.put(this.ApiUrl + '/' + this.value.id, newValue)
                         .then(response => {
                             this.success = true;
@@ -73,7 +72,7 @@
                     )
                 } else {
                     this.success = false;
-                    this.errors = 'Отсутсвует название категории';
+                    this.errors = 'Отсутсвует название производителя';
                 }
             },
             cancel () {

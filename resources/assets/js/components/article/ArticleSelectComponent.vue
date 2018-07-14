@@ -44,7 +44,8 @@
         mounted(){
             if (this.value!==undefined){
                 this.exch_val=this.value;
-                this.$refs.autocomplete.setValue(this.value.name.name);
+                if (this.value.name)
+                    this.$refs.autocomplete.setValue(this.value.name.name);
             }
         },
         methods: {

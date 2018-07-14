@@ -2,20 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Name;
+use App\Store;
 use Illuminate\Http\Request;
 
-class NameController extends Controller
+class StoreController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        return Name::where('alias','like','%' . mb_ereg_replace('[^0-9A-Za-zА-Яа-я]', '', request()->q ) . '%')->orderBy('name')->limit(10)->get();
+        $per_page = 10;
+        $query = Store::join('names','name_id','=','names.id')->select('stores.*','names.alias')->with('name')->where('firm_id','=',$request->firm_id);
+        if ($request->ac)
+            return $query->orderBy('names.alias','ASC')->limit($per_page)->get();
+        return $query->orderBy('names.alias','ASC')->get();
     }
 
     /**
@@ -37,19 +41,11 @@ class NameController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request, [
-            'name' => 'required',
-        ]);
-        $names = Name::where('name','=',request()->name);
-        if ($names->count() == 1)
-        {
-            return $names->get()->first();
-        }
-        $name = new Name;
-        $name->name = $request->name;
-        $name->alias = mb_ereg_replace('[^0-9A-Za-zА-Яа-я]', '',$name->name);
-        $name->save();
-        return $name;
+        $store = new Store;
+        $store->name_id = $request->name['id'];
+        $store->firm_id = $request->firm_id;
+        $store->save();
+        return response()->json(['message'=>'ok','id'=>$store->id]);
     }
 
     /**
@@ -61,17 +57,6 @@ class NameController extends Controller
     public function show($id)
     {
         //
-        $name=request()->name;
-        if ($id == 0) {
-            $names = Name::where('name','=',request()->name);
-            if ($names->count() == 1)
-            {
-                return $names->get()->first();
-            } else {
-                return response()->json(['id' => 0]);
-            }
-        }
-        return Name::find($id);
     }
 
     /**
@@ -95,6 +80,18 @@ class NameController extends Controller
     public function update(Request $request, $id)
     {
         //
+        if ($id == 0) return $this->store($request);
+        $this->validate($request, [
+            'name.id' => 'required|gt:0',
+        ]);
+        $store = Store::find($id);
+        $name = $request->name;
+        $store->name_id = $name['id'];
+        $store->firm_id = $request->firm_id;
+        $store->save();
+        return response()->json(['message'=>'ok']);
+
+
     }
 
     /**
@@ -106,5 +103,6 @@ class NameController extends Controller
     public function destroy($id)
     {
         //
+
     }
 }

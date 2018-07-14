@@ -35,4 +35,8 @@ class Product extends Model
     {
         return $this->belongsToMany('App\Picture')->as('pictures');
     }
+    public function positions()
+    {
+        return $this->hasMany('App\Position');
+    }
 }

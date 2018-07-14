@@ -20,10 +20,14 @@ class SomeCaseController extends Controller
             $per_page = $request->per_page;
         $query = SomeCase::join('names','name_id','=','names.id')->select('some_cases.id','some_cases.name_id','some_cases.article_id','some_cases.picture_id','names.alias')
             ->with('picture','pictures','name','article','article.name');
-        if (isset($request->filter))
-            $query = $query->where('names.alias', 'like', '%' .  preg_replace('/[^а-яёА-ЯЁa-zA-Z0-9]/', '', $request->filter ) . '%');
-        if ($request->ac)
-            return $query->orderBy('names.alias','ASC')->limit($per_page)->get();
+        if (isset($request->q))
+            $query = $query->where('names.alias', 'like','%' . mb_ereg_replace('[^0-9A-Za-zА-Яа-я]', '', request()->q ) . '%');
+        if ($request->ac) {
+            $query = $query->whereNotIn('some_cases.id', function ($subquery) {
+                $subquery->select('some_case_id')->from('some_case_aliases');
+            });
+            return $query->orderBy('names.alias', 'ASC')->limit($per_page)->get();
+        }
         return $query->paginate($per_page);
 
     }

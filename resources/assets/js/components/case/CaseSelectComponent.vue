@@ -12,7 +12,7 @@
                           :on-blur="checkValue"
                           placeholder="Корпус"
             ></autocomplete>
-            <b-button v-if="val===undefined" class="col-md-4" @click="handleOk">Добавить</b-button>
+            <b-button v-if="val===undefined && !onlyselect" class="col-md-4" @click="handleOk">Добавить</b-button>
         </div>
         <div class="row" v-if="add_visible">
             <case-edit-component v-model="exch_val" class="col-md-12" v-on:closecasestable="CloseEdit"></case-edit-component>
@@ -28,7 +28,7 @@
     import bButton from 'bootstrap-vue/es/components/button/button';
     export default {
         name: "CaseSelectComponent",
-        props: ['value'],
+        props: ['value','onlyselect'],
         components: {
             CaseEditComponent,
             Autocomplete,

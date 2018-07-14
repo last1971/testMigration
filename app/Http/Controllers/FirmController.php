@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Producer;
+use App\Firm;
 use Illuminate\Http\Request;
 
-class ProducerController extends Controller
+class FirmController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,16 +14,16 @@ class ProducerController extends Controller
      */
     public function index(Request $request)
     {
+        //
         $per_page = 10;
         if ($request->per_page)
             $per_page = $request->per_page;
-        $query = Producer::join('names','name_id','=','names.id')->select('producers.*','names.alias')->with('picture','pictures','name','article','article.name');
-        if (isset($request->q)) $query =
-            $query->where('names.alias', 'like', '%' .  preg_replace('/[^а-яёА-ЯЁa-zA-Z0-9]/', '', $request->q ) . '%');
+        $query = Firm::join('names','name_id','=','names.id')->select('firms.*','names.alias')->with('name');
+        if (isset($request->q))
+            $query = $query->where('names.alias', 'like', '%' .  preg_replace('/[^а-яёА-ЯЁa-zA-Z0-9]/', '', $request->q ) . '%');
         if ($request->ac)
             return $query->orderBy('names.alias','ASC')->limit($per_page)->get();
         return $query->orderBy('names.alias','ASC')->paginate($per_page);
-
     }
 
     /**
@@ -45,17 +45,14 @@ class ProducerController extends Controller
     public function store(Request $request)
     {
         //
-        $producer = new Producer;
-        $producer->name_id = $request->name['id'];
-        if ($request->article_id>0) $producer->article_id = $request->article_id;
-        if ($request->picture_id != null) $producer->picture_id = $request->picture_id;
-        $producer->save();
-        $pictures = [];
-        if ($request->pictures) {
-            foreach ($request->pictures as $picture) $pictures[] = ['picture_id' => $picture['id']];
-            $producer->pictures()->attach($pictures);
-        }
-        return response()->json(['message'=>'ok','id'=>$producer->id]);
+        $firm = new Firm;
+        $firm->name_id = $request->name['id'];
+        $firm->full_name = $request->full_name;
+        $firm->inn = $request->inn;
+        $firm->kpp = $request->kpp;
+        $firm->own = $request->own;
+        $firm->save();
+        return response()->json(['message'=>'ok','id'=>$firm->id]);
 
     }
 
@@ -69,16 +66,15 @@ class ProducerController extends Controller
     {
         //
         if ($id == 0) {
-            $producers = Producer::join('names','producers.name_id','=','names.id')->where('names.name','=',request()->name);
-            if ($producers->count() == 1)
+            $firms = Firm::join('names','firms.name_id','=','names.id')->where('names.name','=',request()->name);
+            if ($firms->count() == 1)
             {
-                return $producers->get()->first();
+                return $firms->get()->first();
             } else {
                 return response()->json(['id' => 0]);
             }
         }
-        return Producer::find($id);
-
+        return Firm::find($id);
     }
 
     /**
@@ -102,21 +98,24 @@ class ProducerController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $this->validate($request, [
+            'full_name' => 'required',
+            'inn' => 'required',
+            'kpp' => 'required',
+            'own' => 'required',
+        ]);
         if ($id == 0) return $this->store($request);
         $this->validate($request, [
             'name.id' => 'required|gt:0',
         ]);
-        $producer = Producer::find($id);
+        $firm = Firm::find($id);
         $name = $request->name;
-        $producer->name_id = $name['id'];
-        if (isset($request->article) && $request->article['id']>0)  $producer->article_id = $request->article['id'];
-        if ($request->picture_id != null) $producer->picture_id = $request->picture_id;
-        $pictures = [];
-        if ($request->pictures) {
-            foreach ($request->pictures as $picture) $pictures[] = $picture['id'];
-            $producer->pictures()->sync($pictures);
-        }
-        $producer->save();
+        $firm->name_id = $name['id'];
+        $firm->full_name = $request->full_name;
+        $firm->inn = $request->inn;
+        $firm->kpp = $request->kpp;
+        $firm->own = $request->own;
+        $firm->save();
         return response()->json(['message'=>'ok']);
     }
 
@@ -129,6 +128,6 @@ class ProducerController extends Controller
     public function destroy($id)
     {
         //
-        return Producer::destroy($id);
+        return Firm::destroy($id);
     }
 }

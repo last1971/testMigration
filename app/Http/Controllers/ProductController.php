@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Producer;
+use Illuminate\Support\Facades\DB;
 use App\Product;
 use Illuminate\Http\Request;
 
@@ -19,7 +19,8 @@ class ProductController extends Controller
         $per_page = 10;
         if ($request->per_page)
             $per_page = $request->per_page;
-        $query = Product::join('names','name_id','=','names.id')->select('products.*','names.alias')
+        $query = Product::join('names','name_id','=','names.id')->leftJoin('some_case_aliases','products.some_case_id','=','some_case_aliases.some_case_id')
+            ->select('products.*','some_case_aliases.master_id','names.alias',DB::raw('COALESCE(some_case_aliases.master_id,products.some_case_id) as some_case_id'))
             ->with('picture','pictures','name','article','article.name','producer','producer.name','some_case','some_case.name','category','category.name');
         if (isset($request->filter))
             $query = $query->where('names.alias', 'like', '%' .  preg_replace('/[^а-яёА-ЯЁa-zA-Z0-9]/', '', $request->filter ) . '%');

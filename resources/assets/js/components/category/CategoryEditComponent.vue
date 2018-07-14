@@ -2,7 +2,7 @@
     <div>
         <div class="card-header">
             <div class="row">
-                <div class="col-md-6">Продукт</div>
+                <div class="col-md-6">Категория</div>
                 <div class="text-danger text-md-right col-md-6" v-if="errors.message">
                     <em>
                         {{ errors.message }}
@@ -16,11 +16,6 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="form-group row ml-2">
-                <div v-if="value.category" @click="SelectCategory">{{value.category.name.name}}</div>
-                <div v-else @click="SelectCategory">Без категории</div>
-                <categories-tree-component v-if="select_category" v-model="value.category" @input="SelectCategory"></categories-tree-component>
-            </div>
             <div class="form-group row">
                 <name-component v-model="value.name" ref="name"></name-component>
             </div>
@@ -28,12 +23,8 @@
                 <article-select-component v-model="value.article" ref="article"></article-select-component>
             </div>
             <div class="form-group row">
-                <producer-select-component v-model="value.producer" ref="article"></producer-select-component>
+                <image-select-component v-model="value.picture" ref="picture"></image-select-component>
             </div>
-            <div class="form-group row">
-                <case-select-component v-model="value.some_case" ref="article"></case-select-component>
-            </div>
-            <image-slider-component v-model="value.pictures" ref="pictures"></image-slider-component>
             <div class="form-group row">
                 <b-button variant="primary" @click="save" class="col-md-4 offset-md-2">Сохранить</b-button>
                 <b-button variant="danger" @click="cancel" class="col-md-4">Отменить</b-button>
@@ -43,23 +34,19 @@
 </template>
 
 <script>
-    import NameComponent from "./NameComponent";
-    import ImageSliderComponent from "./ImageSliderComponent";
-    import ArticleSelectComponent from "./ArticleSelectComponent";
-    import bButton from 'bootstrap-vue/es/components/button/button';
-    import ProducerSelectComponent from "./ProducerSelectComponent";
-    import CaseSelectComponent from "./CaseSelectComponent";
-    import CategoriesTreeComponent from "./CategoriesTreeComponent";
+    import NameComponent from "../NameComponent";
+    import ImageSliderComponent from "../ImageSliderComponent";
+    import ArticleSelectComponent from "../article/ArticleSelectComponent";
+    import  bButton from 'bootstrap-vue/es/components/button/button';
+    import ImageSelectComponent from "../ImageSelectComponent";
     export default {
-        components: {
-            CaseSelectComponent,
-            ProducerSelectComponent, ArticleSelectComponent,NameComponent, ImageSliderComponent, bButton, CategoriesTreeComponent},
-        props:['value','ApiUrl'],
+        components: {ImageSelectComponent, ArticleSelectComponent,NameComponent, ImageSliderComponent, bButton},
+        props:['value','expanded'],
         data() {
             return {
+                ApiUrl: 'categories',
                 success: false,
-                errors: [],
-                select_category: false
+                errors: []
             }
         },
         methods:{
@@ -67,14 +54,12 @@
                 this.clearErrors();
                 var newValue = this.value;
                 if (newValue.article !== undefined && newValue.article != null && newValue.article.id>0) newValue.article_id = newValue.article.id;
-                if (newValue.producer !== undefined && newValue.producer != null && newValue.producer.id>0) newValue.producer_id = newValue.producer.id;
-                if (newValue.category !== undefined && newValue.category != null && newValue.category.id>0) newValue.category_id = newValue.category.id;
-                if (newValue.some_case !== undefined && newValue.some_case != null && newValue.some_case.id>0) newValue.some_case_id = newValue.some_case.id;
-                if (newValue.pictures.length>0) {
-                    newValue.picture_id = newValue.pictures[this.$refs.pictures.ind].id;
+                if (newValue.picture != undefined && newValue.picture != null && newValue.picture.id>0 ) {
+                    newValue.picture_id = newValue.picture.id;
                 }
                 if (newValue.name !== undefined && newValue.name.id>0) {
                     newValue.name_id = newValue.name.id;
+                    newValue.expanded = this.expanded;
                     axios.put(this.ApiUrl + '/' + this.value.id, newValue)
                         .then(response => {
                             this.success = true;
@@ -88,7 +73,7 @@
                     )
                 } else {
                     this.success = false;
-                    this.errors = 'Отсутсвует название продукта';
+                    this.errors = 'Отсутсвует название категории';
                 }
             },
             cancel () {
@@ -98,9 +83,6 @@
                 this.errors = [];
                 this.success = false;
             },
-            SelectCategory() {
-                this.select_category = ! this.select_category;
-            }
         },
     }
 </script>

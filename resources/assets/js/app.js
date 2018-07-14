@@ -53,12 +53,13 @@ Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector('#csrf-token').
  */
 
 Vue.component('userstable', require('./components/UsersTableComponent.vue'));
-Vue.component('articles-table-component',require('./components/ArticlestableComponent.vue'));
+Vue.component('articles-table-component',require('./components/article/ArticlesTableComponent.vue'));
 Vue.component('useredit', require('./components/UserEditComponent.vue'));
-Vue.component('case-table-component', require('./components/CaseTableComponent.vue'));
-Vue.component('producer-table-component', require('./components/ProducerTableComponent.vue'));
-Vue.component('product-table-component', require('./components/ProductTableComponent.vue'));
-Vue.component('categories-tree-component', require('./components/CategoriesTreeComponent.vue'));
+Vue.component('case-table-component', require('./components/case/CaseTableComponent.vue'));
+Vue.component('producer-table-component', require('./components/producer/ProducerTableComponent.vue'));
+Vue.component('product-table-component', require('./components/product/ProductTableComponent.vue'));
+Vue.component('categories-tree-component', require('./components/category/CategoriesTreeComponent.vue'));
+Vue.component('firm-table-component', require('./components/firm/FirmTableComponent.vue'));
 var app = new Vue({
     store,
     el: '#app',

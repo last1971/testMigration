@@ -27,5 +27,11 @@ class Name extends Model
     {
         return $this->hasMany('App\Category');
     }
-
+    public function firms(){
+        return $this->hasMany('App\Firm');
+    }
+    public function stores()
+    {
+        return $this->hasMany('App\Store');
+    }
 }

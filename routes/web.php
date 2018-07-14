@@ -24,6 +24,7 @@ Route::get('articlestable', function() { return view('articlestable'); } )->midd
 Route::get('casestable', function() { return view('casestable'); } )->middleware('check.employee')->name('casestable');//Таблица корпусов
 Route::get('producerstable', function() { return view('producerstable'); } )->middleware('check.employee')->name('producerstable');//Таблица производителей
 Route::get('productstable', function() { return view('productstable'); } )->middleware('check.employee')->name('productstable');//Таблица производителей
+Route::get('firmstable', function() { return view('firmstable'); } )->middleware('check.employee')->name('firmstable');//Таблица фирм
 Route::resource('userTypes', 'UserTypeController');//Типы пользователей
 Route::get('gitpull',function(){
     $ret = shell_exec('git pull');
@@ -37,3 +38,7 @@ Route::resource('cases','SomeCaseController')->middleware('check.employee');//к
 Route::resource('producers','ProducerController')->middleware('check.employee');//производители
 Route::resource('products','ProductController')->middleware('check.employee');//продукты
 Route::resource('categories','CategoryController');//->middleware('check.employee');//категории
+Route::resource('firms','FirmController')->middleware('check.employee');//фирмы
+Route::resource('stores','StoreController')->middleware('check.employee');//склады
+Route::resource('somecasealiases','SomeCaseAliasController');
+

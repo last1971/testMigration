@@ -27,4 +27,8 @@ class SomeCase extends Model
     {
         return $this->hasMany('App\Product');
     }
+    public function  master_cases()
+    {
+        return $this->hasMany('App\SomeCaseAlias','some_case_aliases_master_id_foreign');
+    }
 }

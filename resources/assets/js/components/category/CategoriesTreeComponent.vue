@@ -4,7 +4,7 @@
             <b-button variant="primary" size="sm" @click="save(0)">Добавить</b-button>
         </div>
         <div v-for="node in nodes">
-            <div class="row tree-hover">
+            <div class="row tree-hover align-items-center">
                     <i v-if="node.lft+1!=node.rgt && node.collapsed" class="tree-collapsed tree-icon ml-0"  @click="toggle(node)"></i>
                     <i v-else-if="!node.collapsed" class="tree-not-collapsed tree-icon ml-0" @click="toggle(node)"></i>
                     <i v-else class="tree-leaf tree-icon ml-0"></i>

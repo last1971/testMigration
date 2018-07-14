@@ -38,8 +38,8 @@
 </template>
 
 <script>
-    import NameComponent from "./NameComponent";
-    import HtmlEditorComponent from "./HtmlEditorComponent";
+    import NameComponent from "../NameComponent";
+    import HtmlEditorComponent from "../HtmlEditorComponent";
     import  bButton from 'bootstrap-vue/es/components/button/button';
     export default {
         name: "ArticleEditComponent",

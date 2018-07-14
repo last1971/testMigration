@@ -11388,6 +11388,11 @@ a.text-dark:focus {
   background-image: url("/storage/icons/dustbin.svg");
 }
 
+.check-icon {
+  background-image: url("/storage/icons/draw-check-mark.svg");
+  background-size: 100%;
+}
+
 .ql-omega:after {
   content: "\3A9";
 }

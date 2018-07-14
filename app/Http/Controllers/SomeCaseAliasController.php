@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Name;
+use App\SomeCase;
+use App\SomeCaseAlias;
 use Illuminate\Http\Request;
 
-class NameController extends Controller
+class SomeCaseAliasController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        return Name::where('alias','like','%' . mb_ereg_replace('[^0-9A-Za-zА-Яа-я]', '', request()->q ) . '%')->orderBy('name')->limit(10)->get();
+        return SomeCase::join('some_case_aliases','some_case_aliases.some_case_id','=','some_cases.id')
+            ->select('some_cases.*')->with('name')->where('some_case_aliases.master_id','=',$request->master_id)->get();
     }
 
     /**
@@ -37,19 +39,11 @@ class NameController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request, [
-            'name' => 'required',
-        ]);
-        $names = Name::where('name','=',request()->name);
-        if ($names->count() == 1)
-        {
-            return $names->get()->first();
-        }
-        $name = new Name;
-        $name->name = $request->name;
-        $name->alias = mb_ereg_replace('[^0-9A-Za-zА-Яа-я]', '',$name->name);
-        $name->save();
-        return $name;
+        $alias = new SomeCaseAlias;
+        $alias->master_id = $request->master_id;
+        $alias->some_case_id = $request->id;
+        $alias->save();
+        return response()->json(['message'=>'ok','id'=>$alias->id]);
     }
 
     /**
@@ -61,17 +55,6 @@ class NameController extends Controller
     public function show($id)
     {
         //
-        $name=request()->name;
-        if ($id == 0) {
-            $names = Name::where('name','=',request()->name);
-            if ($names->count() == 1)
-            {
-                return $names->get()->first();
-            } else {
-                return response()->json(['id' => 0]);
-            }
-        }
-        return Name::find($id);
     }
 
     /**
@@ -106,5 +89,7 @@ class NameController extends Controller
     public function destroy($id)
     {
         //
+        $alias = SomeCaseAlias::where('some_case_id','=',$id)->first();
+        return SomeCaseAlias::destroy($alias->id);
     }
 }

@@ -60,9 +60,9 @@
     import Vuetable from 'vuetable-2/src/components/Vuetable'
     import VuetablePagination from 'vuetable-2/src/components/VuetablePagination'
     import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo'
-    import BootstrapStyle from './bootstrap-css.js'
+    import BootstrapStyle from '../bootstrap-css.js'
     import CaseEditComponent from './CaseEditComponent'
-    import FilterBarComponet from './FilterBarComponent'
+    import FilterBarComponet from '../FilterBarComponent'
     import bModal from 'bootstrap-vue/es/components/modal/modal'
     import bButton from 'bootstrap-vue/es/components/button/button';
     export default {
@@ -112,7 +112,7 @@
         methods: {
             filterChange (data){
                 if (data.length == 0) this.moreParams = {}
-                else this.moreParams.filter = data;
+                else this.moreParams.q = data;
                 var that = this
                 Vue.nextTick( function() {
                     that.$refs.vuetable.refresh()
