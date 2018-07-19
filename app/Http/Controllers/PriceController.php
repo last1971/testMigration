@@ -26,7 +26,7 @@ class PriceController extends Controller
                 ->with(['store.name',
                     'prices' => function($query){
                         $query
-                            ->select('prices.*', DB::raw('(SELECT value FROM exchange_rates WHERE exchange_rates.valute_id=prices.valute_id) * prices.value AS price'))
+                            ->select('prices.*', DB::raw('(SELECT value FROM exchange_rates WHERE exchange_rates.valute_id=prices.valute_id ORDER BY exchange_rates.updated_at DESC LIMIT 1) * prices.value AS price'))
                             ->where('enabled','=',1);
                     }]
                 )
