@@ -135,7 +135,6 @@
             ModalClose () {
                 this.$refs.ProductEdit.hide();
             },
-
         }
     }
 </script>
