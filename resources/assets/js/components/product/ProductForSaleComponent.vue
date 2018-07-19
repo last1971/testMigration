@@ -20,7 +20,7 @@
             </template>
         </vuetable>
         <div class="vuetable-pagination row align-self-center">
-            <b-button size="sm" class="col-md-2" @click="addNewProduct">Новый продукт</b-button>
+
             <div class="col-md-10">
                 <vuetable-pagination-info ref="paginationInfo"
                                           :css="css.pagination"
