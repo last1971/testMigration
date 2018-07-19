@@ -36,9 +36,10 @@ Route::resource('articles','ArticleController')->middleware('check.employee');//
 Route::resource('pictures','PictureController')->middleware('check.employee');//картинки
 Route::resource('cases','SomeCaseController')->middleware('check.employee');//корпуса
 Route::resource('producers','ProducerController')->middleware('check.employee');//производители
-Route::resource('products','ProductController')->middleware('check.employee');//продукты
+Route::resource('products','ProductController');//продукты
 Route::resource('categories','CategoryController');//->middleware('check.employee');//категории
 Route::resource('firms','FirmController')->middleware('check.employee');//фирмы
 Route::resource('stores','StoreController')->middleware('check.employee');//склады
 Route::resource('somecasealiases','SomeCaseAliasController');
+Route::resource('prices','PriceController');
 

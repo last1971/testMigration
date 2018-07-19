@@ -58,7 +58,7 @@ Vue.component('useredit', require('./components/UserEditComponent.vue'));
 Vue.component('case-table-component', require('./components/case/CaseTableComponent.vue'));
 Vue.component('producer-table-component', require('./components/producer/ProducerTableComponent.vue'));
 Vue.component('product-table-component', require('./components/product/ProductTableComponent.vue'));
-Vue.component('categories-tree-component', require('./components/category/CategoriesTreeComponent.vue'));
+Vue.component('product-for-sale-component', require('./components/product/ProductForSaleComponent.vue'));
 Vue.component('firm-table-component', require('./components/firm/FirmTableComponent.vue'));
 var app = new Vue({
     store,

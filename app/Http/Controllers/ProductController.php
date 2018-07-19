@@ -13,6 +13,11 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('check.employee')->except('index');
+    }
+
     public function index(Request $request)
     {
         //
@@ -21,7 +26,7 @@ class ProductController extends Controller
             $per_page = $request->per_page;
         $query = Product::join('names','name_id','=','names.id')->leftJoin('some_case_aliases','products.some_case_id','=','some_case_aliases.some_case_id')
             ->select('products.*','some_case_aliases.master_id','names.alias',DB::raw('COALESCE(some_case_aliases.master_id,products.some_case_id) as some_case_id'))
-            ->with('picture','pictures','name','article','article.name','producer','producer.name','some_case','some_case.name','category','category.name');
+            ->with('picture','pictures','name','article','article.name','producer','producer.name','some_case','some_case.name','some_case.picture','category','category.name');
         if (isset($request->filter))
             $query = $query->where('names.alias', 'like', '%' .  preg_replace('/[^а-яёА-ЯЁa-zA-Z0-9]/', '', $request->filter ) . '%');
         if ($request->ac)

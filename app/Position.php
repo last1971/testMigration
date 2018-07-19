@@ -17,6 +17,6 @@ class Position extends Model
     }
     public  function availibilities()
     {
-        return $this->hasMany('App\Avalibility');
+        return $this->hasMany('App\Availibility');
     }
 }
