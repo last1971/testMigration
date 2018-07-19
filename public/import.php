@@ -6,8 +6,8 @@
 	$records = explode("\n", $records);
 	$n = count($records);
 	for ($i = 1; $i < $n; $i++) {
+	    $row = explode("\t", $records[$i]);
         if (count($row) > 18) {
-            $row = explode("\t", $records[$i]);
             $name = iconv("cp1251", "utf-8", $row[2]);
             $producer = iconv("cp1251", "utf-8", $row[4]);
             $corpus = iconv("cp1251", "utf-8", $row[3]);
