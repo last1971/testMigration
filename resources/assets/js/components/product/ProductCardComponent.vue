@@ -3,6 +3,7 @@
         <input v-model="quantity"/>
         <div v-for="availibility in availibilities">
             <span>Склад:{{availibility.store.name.name}}</span>
+            <span>Наличие:{{availibility.quantity_free}}</span>
             <span>Кратно:{{availibility.multiply}}</span>
             <div v-for="(price,index) in availibility.prices">
                 <span v-if="index==0">От {{availibility.minimum}}</span>
