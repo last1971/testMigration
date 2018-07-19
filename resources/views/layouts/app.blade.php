@@ -47,6 +47,7 @@
                                         <a class="dropdown-item" href="{{ route('productstable') }}">Продукты</a>
                                         <a class="dropdown-item" href="{{ route('userstable') }}">Пользователи</a>
                                         <a class="dropdown-item" href="{{ route('producerstable') }}">Пpоизводители</a>
+                                        <a class="dropdown-item" href="{{ route('firmstable') }}">Фирмы</a>
                                         <a class="dropdown-item" href="{{ route('gitpull') }}">Обновить с GitHub</a>
                                     </div>
                                 </li>

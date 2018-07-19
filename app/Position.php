@@ -15,4 +15,8 @@ class Position extends Model
     {
         return $this->belongsTo('App\Firm');
     }
+    public  function availibilities()
+    {
+        return $this->hasMany('App\Avalibility');
+    }
 }
