@@ -105213,43 +105213,28 @@ var render = function() {
         ])
       }),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "vuetable-pagination row align-self-center" },
-        [
-          _c(
-            "b-button",
-            {
-              staticClass: "col-md-2",
-              attrs: { size: "sm" },
-              on: { click: _vm.addNewProduct }
-            },
-            [_vm._v("Новый продукт")]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "col-md-10" },
-            [
-              _c("vuetable-pagination-info", {
-                ref: "paginationInfo",
-                attrs: {
-                  css: _vm.css.pagination,
-                  "info-template": _vm.infoTemplate
-                }
-              }),
-              _vm._v(" "),
-              _c("vuetable-pagination", {
-                ref: "pagination",
-                attrs: { css: _vm.css.pagination },
-                on: { "vuetable-pagination:change-page": _vm.onChangePage }
-              })
-            ],
-            1
-          )
-        ],
-        1
-      ),
+      _c("div", { staticClass: "vuetable-pagination row align-self-center" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-10" },
+          [
+            _c("vuetable-pagination-info", {
+              ref: "paginationInfo",
+              attrs: {
+                css: _vm.css.pagination,
+                "info-template": _vm.infoTemplate
+              }
+            }),
+            _vm._v(" "),
+            _c("vuetable-pagination", {
+              ref: "pagination",
+              attrs: { css: _vm.css.pagination },
+              on: { "vuetable-pagination:change-page": _vm.onChangePage }
+            })
+          ],
+          1
+        )
+      ]),
       _vm._v(" "),
       _c(
         "b-modal",

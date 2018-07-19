@@ -1,5 +1,5 @@
 <?php
-    $pdo = new PDO('mysql:host=localhost;dbname=testmigrationdb', 'testmigration','testmigrationUSER');
+    $pdo = new PDO('mysql:host=localhost;dbname=testmigrationdb', 'testmigration','USERtestmigration');
     $stmt = $pdo->prepare('UPDATE prices a,availibilities b SET a.enabled=0,a.updated_at=? WHERE b.store_id = 4 AND a.availibility_id = b.id AND a.enabled=1');
     $stmt->execute([date('Y-m-d H:i:s')]);
 	$records = file_get_contents('PROD.CSV');
