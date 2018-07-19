@@ -16,7 +16,7 @@
             <template slot="image" slot-scope="props">
                 <img v-if="props.rowData.picture_id>0" :src="props.rowData.picture.path" alt="" width="100" height="100">
                 <img v-else-if="props.rowData.some_case && props.rowData.some_case.picture_id>0" :src="props.rowData.some_case.picture.path" alt="" width="100" height="100">
-                <img v-else src="/images/no_photo.png" width="100" height="100"/>
+                <img v-else src="/images/no_photo.png" width="100" height="100" />
             </template>
         </vuetable>
         <div class="vuetable-pagination row align-self-center">
