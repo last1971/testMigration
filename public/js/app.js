@@ -1,4 +1,4 @@
-/******/ (function(modules) { // webpackBootstrap
+/******/  (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -104778,7 +104778,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -104930,11 +104930,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         ModalClose: function ModalClose() {
             this.$refs.ProductEdit.hide();
-        },
-        addNewProduct: function addNewProduct() {
-            this.rowData = { id: 0, name_id: 0, name: { id: 0, name: '' }, pictures: [], article: { id: 0, name: { id: 0, name: '' } }, some_case: { id: 0, name: { id: 0, name: '' } }, producer: { id: 0, name: { id: 0, name: '' } } };
-            this.$refs.ProductEditForm.clearErrors();
-            this.$refs.ProductEdit.show();
         }
     }
 });

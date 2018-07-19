@@ -135,11 +135,7 @@
             ModalClose () {
                 this.$refs.ProductEdit.hide();
             },
-            addNewProduct(){
-                this.rowData = {id:0,name_id:0,name:{id:0,name:''},pictures:[],article:{id:0,name:{id:0,name:''}},some_case:{id:0,name:{id:0,name:''}},producer:{id:0,name:{id:0,name:''}}};
-                this.$refs.ProductEditForm.clearErrors();
-                this.$refs.ProductEdit.show();
-            }
+
         }
     }
 </script>
