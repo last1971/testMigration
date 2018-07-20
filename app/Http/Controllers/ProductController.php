@@ -27,6 +27,18 @@ class ProductController extends Controller
         $query = Product::join('names','name_id','=','names.id')->leftJoin('some_case_aliases','products.some_case_id','=','some_case_aliases.some_case_id')
             ->select('products.*','some_case_aliases.master_id','names.alias',DB::raw('COALESCE(some_case_aliases.master_id,products.some_case_id) as some_case_id'))
             ->with('picture','pictures','name','article','article.name','producer','producer.name','some_case','some_case.name','some_case.picture','category','category.name');
+        if (isset($request->addAvailibale))
+            $query = $query->addSelect(
+                DB::raw('(SELECT sum(availibilities.quantity_free) FROM availibilities,positions WHERE positions.id=availibilities.position_id AND positions.product_id=products.id) as availibale')
+            );
+        if (isset($request->addPrice))
+            $query = $query->addSelect(
+                DB::raw(
+                    '(SELECT MIN(prices.value * (SELECT exchange_rates.value FROM exchange_rates WHERE exchange_rates.valute_id = prices.valute_id ORDER BY exchange_rates.updated_at DESC LIMIT 1)) 
+                             FROM prices,availibilities,positions WHERE prices.availibility_id = availibilities.id AND positions.id=availibilities.position_id AND positions.product_id=products.id
+                             AND availibilities.quantity_free>0) AS price'
+                )
+            );
         if (isset($request->filter))
             $query = $query->where('names.alias', 'like', '%' .  preg_replace('/[^а-яёА-ЯЁa-zA-Z0-9]/', '', $request->filter ) . '%');
         if ($request->ac)

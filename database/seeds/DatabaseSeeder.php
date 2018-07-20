@@ -13,13 +13,40 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UsersTableSeeder::class);
-        //$this->call('TestTableSeeder');
+
         //$this->call('UserTypeTableSeeder');
-        $this->call('RubSeeder');
-        $this->call('PriceTypeSeeder');
+        //$this->call('RubSeeder');
+        //$this->call('PriceTypeSeeder');
+        $this->call('DocumentTypeSeeder');
         $this->command->info('Таблица test загружена данными!');
     }
 }
+class DocumentTypeSeeder extends Seeder
+{
+    public function run(){
+        DB::table('document_types')->insert([
+            'name' => 'Корзина',
+            'alias' => 'basket'
+        ]);
+        DB::table('document_types')->insert([
+            'name' => 'Продажа',
+            'alias' => 'sale'
+        ]);
+        DB::table('document_types')->insert([
+            'name' => 'Счет',
+            'alias' => 'invoice'
+        ]);
+        DB::table('document_types')->insert([
+            'name' => 'УПД',
+            'alias' => 'utd'
+        ]);
+        DB::table('document_types')->insert([
+            'name' => 'Перемещение',
+            'alias' => 'movement'
+        ]);
+    }
+}
+
 class PriceTypeSeeder extends Seeder
 {
     public function run(){
@@ -68,15 +95,6 @@ class RubSeeder extends Seeder
             'updated_at' => date('Y-m-d H:i:s')
         ]);
     }
-}
-class TestTableSeeder extends Seeder {
-
-    public function run()
-    {
-        DB::table('mytests')->delete();
-        \App\mytest::create(['test' => 'Первое поле','test2' => 'Second поле']);
-    }
-
 }
 
 class UserTypeTableSeeder extends Seeder {

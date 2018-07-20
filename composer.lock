@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c9bd5cac83fbd7f5f44a571ec46b1ee0",
+    "content-hash": "3368726ff4235a5cfb4a62a3f41f5d58",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1298,6 +1298,52 @@
                 "storage"
             ],
             "time": "2018-05-07T08:44:23+00:00"
+        },
+        {
+            "name": "marquine/eloquent-uuid",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/leomarquine/eloquent-uuid.git",
+                "reference": "6f3d8384e332cf0be07b5800ca38a8cf12ae120d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/leomarquine/eloquent-uuid/zipball/6f3d8384e332cf0be07b5800ca38a8cf12ae120d",
+                "reference": "6f3d8384e332cf0be07b5800ca38a8cf12ae120d",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^5.0.0",
+                "illuminate/events": "^5.0.0",
+                "ramsey/uuid": "^3.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Marquine\\EloquentUuid\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Leonardo Marquine",
+                    "email": "leonardomarquine@gmail.com"
+                }
+            ],
+            "description": "Uuid primary key for Laravel Eloquent Models",
+            "keywords": [
+                "eloquent",
+                "laravel",
+                "uuid"
+            ],
+            "time": "2017-12-27T15:05:14+00:00"
         },
         {
             "name": "monolog/monolog",
