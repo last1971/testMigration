@@ -105020,7 +105020,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -105047,13 +105047,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "ProductCardComponent",
     props: ['product'],
     data: function data() {
         return {
-            quantity: 0,
+            quantity: 1,
             availibilities: []
         };
     },
@@ -105068,6 +105077,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.availibilities = [];
             });
         }
+    },
+    methods: {
+        notAvailible: function notAvailible(quantity, maximum) {
+            return quantity > maximum;
+        },
+        number_format: function number_format(number, decimals, dec_point, thousands_sep) {
+            number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+            var n = !isFinite(+number) ? 0 : +number,
+                prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+                sep = typeof thousands_sep === 'undefined' ? ',' : thousands_sep,
+                dec = typeof dec_point === 'undefined' ? '.' : dec_point,
+                s = '',
+                toFixedFix = function toFixedFix(n, prec) {
+                var k = Math.pow(10, prec);
+                return '' + (Math.round(n * k) / k).toFixed(prec);
+            };
+            // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+            s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+            if (s[0].length > 3) {
+                s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+            }
+            if ((s[1] || '').length < prec) {
+                s[1] = s[1] || '';
+                s[1] += new Array(prec - s[1].length + 1).join('0');
+            }
+            return s.join(dec);
+        }
     }
 });
 
@@ -105081,53 +105117,113 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { attrs: { classs: "container" } },
     [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.quantity,
-            expression: "quantity"
-          }
-        ],
-        domProps: { value: _vm.quantity },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
+      _c("div", { staticClass: "form-row" }, [
+        _c("label", { staticClass: "col" }, [_vm._v("Введите количество")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.quantity,
+              expression: "quantity"
             }
-            _vm.quantity = $event.target.value
+          ],
+          staticClass: "col",
+          domProps: { value: _vm.quantity },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.quantity = $event.target.value
+            }
           }
-        }
-      }),
+        })
+      ]),
       _vm._v(" "),
       _vm._l(_vm.availibilities, function(availibility) {
         return _c(
           "div",
+          { staticClass: "row" },
           [
-            _c("span", [
-              _vm._v("Склад:" + _vm._s(availibility.store.name.name))
+            _c("span", { staticClass: "col" }, [
+              _vm._v("Склад: " + _vm._s(availibility.store.name.name))
             ]),
             _vm._v(" "),
-            _c("span", [
-              _vm._v("Наличие:" + _vm._s(availibility.quantity_free))
+            _c("span", { staticClass: "col" }, [
+              _vm._v("Наличие: " + _vm._s(availibility.quantity_free))
             ]),
             _vm._v(" "),
-            _c("span", [_vm._v("Кратно:" + _vm._s(availibility.multiply))]),
+            _c("span", { staticClass: "col" }, [
+              _vm._v("Кратно: " + _vm._s(availibility.multiply))
+            ]),
             _vm._v(" "),
             _vm._l(availibility.prices, function(price, index) {
-              return _c("div", [
-                index == 0
-                  ? _c("span", [_vm._v("От " + _vm._s(availibility.minimum))])
-                  : _c("span", [
-                      _vm._v(
-                        "От " +
-                          _vm._s(availibility.prices[index - 1].maximum + 1)
-                      )
-                    ]),
-                _vm._v(" "),
-                _c("span", [_vm._v(_vm._s(price.price) + " руб.")])
+              return _c("div", { staticClass: "container" }, [
+                (index == 0 &&
+                  _vm.quantity >= availibility.minimum &&
+                  _vm.quantity <= price.maximum) ||
+                (index > 0 &&
+                  _vm.quantity >= availibility.prices[index - 1].maximum + 1 &&
+                  _vm.quantity <= price.maximum)
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "row",
+                        class: {
+                          "bg-warning": _vm.notAvailible(
+                            _vm.quantity,
+                            availibility.quantity_free
+                          )
+                        }
+                      },
+                      [
+                        index == 0
+                          ? _c("span", { staticClass: "col" }, [
+                              _vm._v(
+                                "От " + _vm._s(availibility.minimum) + " шт."
+                              )
+                            ])
+                          : _c("span", { staticClass: "col" }, [
+                              _vm._v(
+                                "От " +
+                                  _vm._s(
+                                    availibility.prices[index - 1].maximum + 1
+                                  ) +
+                                  " шт."
+                              )
+                            ]),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "col" }, [
+                          _vm._v(
+                            "Цена: " +
+                              _vm._s(
+                                _vm.number_format(price.price, 2, ",", " ")
+                              ) +
+                              " руб."
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "col" }, [
+                          _vm._v(
+                            "Итого: " +
+                              _vm._s(
+                                _vm.number_format(
+                                  price.price * _vm.quantity,
+                                  2,
+                                  ",",
+                                  " "
+                                )
+                              ) +
+                              " руб."
+                          )
+                        ])
+                      ]
+                    )
+                  : _vm._e()
               ])
             })
           ],
