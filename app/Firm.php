@@ -19,4 +19,13 @@ class Firm extends Model
     {
         return $this->hasMany('App\Position');
     }
+    public function documents()
+    {
+        return $this->hasMany('App\Document');
+    }
+
+    public function incomingDocumentes()
+    {
+        return $this->hasMany('App\Firm','documents_buyer_id_foreign');
+    }
 }

@@ -19,4 +19,12 @@ class Store extends Model
     {
         return $this->hasMany('App\Avalibility');
     }
+    public function documents()
+    {
+        return $this->hasMany('App\Document');
+    }
+    public function  incomingDocuments()
+    {
+        return $this->hasMany('App\Document','documents_to_id_foreign');
+    }
 }
