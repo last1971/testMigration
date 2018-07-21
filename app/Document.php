@@ -20,23 +20,23 @@ class Document extends Model
         return $this->belongsTo('App\User');
     }
 
-    public function firm()
-    {
-        return $this->belongsTo('App\Firm');
-    }
-
-    public  function buyer()
-    {
-        return $this->belongsTo('App\Firm','documents_buyer_id_foreign');
-    }
-
     public function store()
     {
-        return $this->belongsTo('App\Firm');
+        return $this->belongsTo('App\Store');
     }
 
     public  function to()
     {
-        return $this->belongsTo('App\Firm','documents_to_id_foreign');
+        return $this->belongsTo('App\Store','documents_to_id_foreign');
+    }
+
+    public function documentLines()
+    {
+        return $this->hasMany('App\DocumentLine');
+    }
+
+    public  function exchangeRate()
+    {
+        return $this->belongsTo('App\ExchangeRate');
     }
 }

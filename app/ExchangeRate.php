@@ -11,4 +11,8 @@ class ExchangeRate extends Model
     {
         return $this->belongsTo('App\Valute');
     }
+    public function documents()
+    {
+        return $this->hasMany('App\Document');
+    }
 }

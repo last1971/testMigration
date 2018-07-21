@@ -39,4 +39,8 @@ class Product extends Model
     {
         return $this->hasMany('App\Position');
     }
+    public function documentLines()
+    {
+        return $this->hasMany('App\DocumentLine');
+    }
 }
